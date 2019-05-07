@@ -1,0 +1,145 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+    </style>
+
+
+    <style name="Theme.zjy.activity.slideback" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+    <style name="ZjyTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="WarpLinearLayoutDefault">
+        <item name="grivate">left</item>
+        <item name="horizontal_Space">0dp</item>
+        <item name="vertical_Space">5dp</item>
+        <item name="isFull">true</item>
+    </style>
+    <style name="material_ed_yundan">
+        <item name="met_floatingLabel">highlight</item>
+        <item name="met_primaryColor">@color/color_materialed_primary</item>
+        <item name="met_baseColor">@color/color_materialed_base</item>
+        <item name="met_textColorHint">@color/color_materialed_hint</item>
+        <item name="met_floatingLabelAlwaysShown">false</item>
+        <item name="met_underlineColor">@color/color_materialed_underline</item>
+        <item name="met_floatingLabelTextColor">@color/color_materialed_labcolor</item>
+        <item name="met_textColor">@color/black_de</item>
+    </style>
+    <style name="material_ed_ky" parent="material_ed_yundan"/>
+    <style name="material_ed_nomarl" parent="material_ed_yundan">
+        <item name="met_floatingLabel">none</item>
+    </style>
+    <style name="zjy_title">
+        <item name="android:background">@color/title_background</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@color/color_white</item>
+        <!--  android:id="@+id/caigouedit_title"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:background="@color/bijia_title_background"
+          android:gravity="center"
+          android:text="运单打印"
+          android:textColor="@color/color_white"
+          android:textSize="20sp"-->
+    </style>
+    <style name="AppSplash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@mipmap/appsplash</item>
+    </style>
+    <style name="lrPadding">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
+    <style name="dialog_coustom" parent="android:Theme.Dialog">
+        <item name="android:background">#E8E8E8</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="myButton">
+        <item name="android:background">@drawable/btn_click</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">35dp</item>
+    </style>
+    <style name="zjy_metiarial_ed">
+    </style>
+    <!--app:met_clearButton="true"<
+          app:met_primaryColor="@color/colorPrimary"&ndash;&gt;-->
+    <style name="anim_popup_dir">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out</item>
+    </style>
+
+    <style name="zjy_theme_stautebar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:buttonStyle">@style/zjy_button_light</item>
+
+    </style>
+    <style name="zjy_button_light" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/bg_light_button</item>
+        <item name="android:textColor">@color/button_light_content</item>
+        <item name="android:minHeight">35dp</item>
+        <item name="android:minWidth">60dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="zjy_button_nomarl_alpha100" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/btn_selector</item>
+        <item name="android:minHeight">35dp</item>
+        <item name="android:minWidth">60dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/btn_padding</item>
+    </style>
+    <style name="zjy_button_nomarl_ky" parent="zjy_button_nomarl_alpha100">
+    </style>
+    <style name="zjy_button_nomarl_alpha100_large" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/btn_selector</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/btn_padding</item>
+    </style>
+    <style name="zjy_lv_divider">
+        <item name="android:dividerHeight">2dp</item>
+        <item name="android:divider">@drawable/divider</item>
+    </style>
+    <style name="sf_tv_tips">
+        <item name="android:textColor">@color/alertcolor_bg_whight</item>
+        <item name="android:textSize">@dimen/def_text_size_small</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <declare-styleable name="WarpLinearLayout">
+        <attr name="grivate" format="enum"><!--对齐方式 !-->
+            <enum name="right" value="0"/>
+            <enum name="left" value="1"/>
+            <enum name="center" value="2"/>
+        </attr>
+        <attr name="horizontal_Space" format="dimension"/>
+        <attr name="vertical_Space" format="dimension"/>
+        <attr name="isFull" format="boolean"/>
+    </declare-styleable>
+</resources>
