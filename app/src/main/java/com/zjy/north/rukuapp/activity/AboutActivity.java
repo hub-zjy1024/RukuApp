@@ -10,7 +10,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -23,6 +25,7 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.zjy.north.baidulocation.BaiduLocation;
 import com.zjy.north.rukuapp.MyApp;
 import com.zjy.north.rukuapp.R;
 import com.zjy.north.rukuapp.activity.base.BaseMActivity;
@@ -53,17 +56,38 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import utils.common.MyFileUtils;
 import utils.common.UpdateClient;
+import utils.common.UploadUtils;
+import utils.common.log.LogUploader;
 import utils.framwork.MyToast;
+import utils.handler.NoLeakHandler;
 
-public class AboutActivity extends BaseMActivity {
+public class AboutActivity extends BaseMActivity implements NoLeakHandler.NoLeakCallback{
 
-    private Handler mHandler = new Handler();
+    private Handler mHandler = new NoLeakHandler(this);
+
     private ProgressDialog downPd;
     private TextView tvNewVersion;
     final String updateUrl = UpdateClient.downUrl;
     final String localName = UpdateClient.saveName;
     final String checkUrl = UpdateClient.checkUpdateURL;
     private ImageView updateIv;
+
+    @Override
+    public void handleMessage(Message msg) {
+        switch (msg.what) {
+            case LogUploader.LOG_UPLOAD_FAIL:
+                String msgStr = "未知异常";
+                if (msg.obj != null) {
+                    msgStr = msg.obj.toString();
+                }
+                showMsgToast(msgStr);
+                break;
+            case LogUploader.LOG_UPLOAD_SUCCESS:
+                showMsgToast("上传日志完成");
+                break;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,16 +157,37 @@ public class AboutActivity extends BaseMActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
+        final TextView viewInContent = getViewInContent(R.id.activity_about_tv_location);
+        BaiduLocation mlocation = new BaiduLocation(this, new BaiduLocation.onReceiveLocationListener() {
+            @Override
+            public void onReceiveLocation(BaiduLocation.Mlocation location) {
+                viewInContent.setText("位置：" + location.toString());
+            }
+        });
+        mlocation.start();
+        final TextView tvDevid = getViewInContent(R.id.activity_about_tv_devid);
+        String phoneId = UploadUtils.getDeviceID(mContext);
+        tvDevid.setText("设备号："+phoneId);
     }
 
     @Override
     public void init() {
-
+        Toolbar tb = getViewInContent(R.id.dyjkf_normalTb);
+        tb.setTitle("上架");
+        tb.setSubtitle("");
+        setSupportActionBar(tb);
     }
 
     @Override
     public void setListeners() {
-
+        getViewInContent(R.id.activity_about_btn_upload).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogUploader mUploader = new LogUploader(mContext);
+                mUploader.upload(mHandler);
+            }
+        });
     }
 
     @Override

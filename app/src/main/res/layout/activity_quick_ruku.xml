@@ -8,12 +8,14 @@
     android:orientation="vertical"
     tools:context=".activity.QuickRukuActivity">
 
-    <include layout="@layout/title_normal_toobar"/>
 
     <LinearLayout
         android:id="@+id/activity_rk_containner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
 
         <LinearLayout
@@ -22,8 +24,14 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/activity_rk_ed_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:hint="输入明细号"
+                android:inputType="number"
+                app:met_baseColor="@color/colorPrimary"
+                app:met_clearButton="true"
+                app:met_primaryColor="@color/colorPrimary"
+                />
 
             <Button
                 android:id="@+id/activity_rk_btn_search"
@@ -36,12 +44,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="扫码"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/activity_rk_batch_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <Button
+                    android:id="@+id/activity_rk_batch_selectAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全选"/>
+            <Button
+                android:id="@+id/activity_rk_batch_deselectAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="反选"/>
+            <Button
+                android:id="@+id/activity_rk_batch_commit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="批量入库"/>
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/activity_rk_recview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"/>-->
+        <com.zjy.north.rukuapp.mview.RecyclerViewTouchable
             android:id="@+id/activity_rk_recview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 </LinearLayout>

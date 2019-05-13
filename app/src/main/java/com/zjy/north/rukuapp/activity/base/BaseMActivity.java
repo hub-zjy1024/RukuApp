@@ -2,6 +2,7 @@ package com.zjy.north.rukuapp.activity.base;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.IdRes;
@@ -28,10 +29,13 @@ public abstract class BaseMActivity extends AppCompatActivity {
     }
 
     protected void loadingNoProcess(String msg) {
+        pdDialog.setTitle("加载中。。。");
         pdDialog.setMessage(msg);
-        if (!isPaused) {
-            pdDialog.show();
-        }
+        String s;
+        pdDialog.show();
+//        if (!isPaused) {
+//            pdDialog.show();
+//        }
     }
 
     @Override
@@ -84,6 +88,11 @@ public abstract class BaseMActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public final void openActivity(Class ac) {
+        Intent mIntent = new Intent(this, ac);
+        startActivity(mIntent);
     }
 
     public void showMsgDialog(final String msg, final String title) {

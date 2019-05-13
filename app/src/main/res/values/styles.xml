@@ -8,7 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
+        <!--指定toolbar弹出菜单样式-->
+        <item name="actionOverflowMenuStyle">@style/toolbarMenuStyle</item>
     </style>
 
 
@@ -17,6 +18,7 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+
     <style name="ZjyTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -25,12 +27,14 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="WarpLinearLayoutDefault">
         <item name="grivate">left</item>
         <item name="horizontal_Space">0dp</item>
         <item name="vertical_Space">5dp</item>
         <item name="isFull">true</item>
     </style>
+
     <style name="material_ed_yundan">
         <item name="met_floatingLabel">highlight</item>
         <item name="met_primaryColor">@color/color_materialed_primary</item>
@@ -41,10 +45,13 @@
         <item name="met_floatingLabelTextColor">@color/color_materialed_labcolor</item>
         <item name="met_textColor">@color/black_de</item>
     </style>
+
     <style name="material_ed_ky" parent="material_ed_yundan"/>
+
     <style name="material_ed_nomarl" parent="material_ed_yundan">
         <item name="met_floatingLabel">none</item>
     </style>
+
     <style name="zjy_title">
         <item name="android:background">@color/title_background</item>
         <item name="android:gravity">center</item>
@@ -59,9 +66,11 @@
           android:textColor="@color/color_white"
           android:textSize="20sp"-->
     </style>
-    <style name="AppSplash" parent="Theme.AppCompat.Light.NoActionBar">
+
+    <style name="AppSplash" parent="AppTheme">
         <item name="android:windowBackground">@mipmap/appsplash</item>
     </style>
+
     <style name="lrPadding">
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
@@ -81,6 +90,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">35dp</item>
     </style>
+
     <style name="zjy_metiarial_ed">
     </style>
     <!--app:met_clearButton="true"<
@@ -97,6 +107,7 @@
         <item name="android:buttonStyle">@style/zjy_button_light</item>
 
     </style>
+
     <style name="zjy_button_light" parent="Base.Widget.AppCompat.Button">
         <item name="android:background">@drawable/bg_light_button</item>
         <item name="android:textColor">@color/button_light_content</item>
@@ -105,6 +116,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="zjy_button_nomarl_alpha100" parent="Base.Widget.AppCompat.Button">
         <item name="android:background">@drawable/btn_selector</item>
         <item name="android:minHeight">35dp</item>
@@ -113,8 +125,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">@dimen/btn_padding</item>
     </style>
+
     <style name="zjy_button_nomarl_ky" parent="zjy_button_nomarl_alpha100">
     </style>
+
     <style name="zjy_button_nomarl_alpha100_large" parent="Base.Widget.AppCompat.Button">
         <item name="android:background">@drawable/btn_selector</item>
         <item name="android:minHeight">40dp</item>
@@ -122,10 +136,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">@dimen/btn_padding</item>
     </style>
+
     <style name="zjy_lv_divider">
         <item name="android:dividerHeight">2dp</item>
         <item name="android:divider">@drawable/divider</item>
     </style>
+
     <style name="sf_tv_tips">
         <item name="android:textColor">@color/alertcolor_bg_whight</item>
         <item name="android:textSize">@dimen/def_text_size_small</item>
@@ -142,4 +158,42 @@
         <attr name="vertical_Space" format="dimension"/>
         <attr name="isFull" format="boolean"/>
     </declare-styleable>
+
+    <!--自定义toolbar菜单样式-->
+    <style name="mToobar" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <item name="titleTextColor">@color/color_white</item>
+        <item name="subtitleTextColor">@color/color_tb_subtitle</item>
+        <item name="android:background">@color/title_background</item>
+    </style>
+
+    <style name="toolbarMenuStyle" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <!-- 是否覆盖锚点，默认为true，即盖住Toolbar -->
+        <item name="overlapAnchor">false</item>
+        <!-- 弹出层背景颜色 -->
+        <item name="android:popupBackground">@color/title_background</item>
+        <!-- 弹出层垂直方向上的偏移，负值会覆盖toolbar -->
+        <item name="android:dropDownVerticalOffset">5dp</item>
+        <!-- 弹出层水平方向上的偏移，即距离屏幕左边的距离，负值会导致右边出现空隙 -->
+        <item name="android:dropDownHorizontalOffset">-2dp</item>
+        <!--文字颜色-->
+        <item name="android:textColor">@color/color_white</item>
+    </style>
+
+    <style name="Base.AppTheme" parent="Theme.AppCompat">
+        <!--去掉原来的ActionBar-->
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- API Level 22 编译要去掉android -->
+        <item name="windowNoTitle">true</item>
+
+        <!-- Actionbar color -->
+        <item name="colorPrimary">@color/material_deep_teal_500</item>
+        <!--Status bar color-->
+        <item name="colorPrimaryDark">@color/material_deep_teal_500</item>
+        <!--Window color-->
+        <item name="android:windowBackground">@color/dim_foreground_material_dark</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme2" parent="Base.AppTheme"></style>
 </resources>

@@ -18,6 +18,7 @@ public class SpSettings {
     public static final String PREF_USERINFO = "UserInfo";
     public static final String PREF_TKPIC = "pref_takepic_style";
     public static final String PREF_CAMERA_INFO = "cameraInfo";
+    public static final String PREF_LOGUPLOAD = "uploadlog";
     public static final String PREF_EXPRESS = "prefExpress";
 
     public static final String Ruku_storageKey = "storageID";

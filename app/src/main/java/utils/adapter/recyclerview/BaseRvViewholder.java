@@ -19,6 +19,7 @@ public  class BaseRvViewholder extends RecyclerView.ViewHolder implements IHolde
     private SparseArray<View> mItemViews = new SparseArray<>();
     //子布局
     private View itemView;
+    public int position;
 
     public BaseRvViewholder(View itemView) {
         super(itemView);

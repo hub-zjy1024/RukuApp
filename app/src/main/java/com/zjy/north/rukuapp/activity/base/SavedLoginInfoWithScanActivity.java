@@ -35,7 +35,7 @@ public class SavedLoginInfoWithScanActivity extends BaseScanActivity implements 
 
     @Override
     public void init() {
-
+        super.init();
     }
 
     @Override

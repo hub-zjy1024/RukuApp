@@ -32,9 +32,13 @@ public class MainContract {
     }
     public interface MainAcView extends BaseView<MainAcPresenter> {
 
-        void login(int code, String name, String pwd, String msg);
+        void onLoginSuccess(String name);
 
-         void showProgress(String msg);
+        void onLoginFailed(String msg);
+
+        void showProgress(String msg);
+
+        void cancelLoading();
 
         void getUpdateInfo(String info);
 
@@ -216,34 +220,38 @@ public class MainContract {
         }
 
         public void login(final String name, final String pwd, String version) {
-            mView.showProgress("正在登陆");
+            mView.showProgress("正在登录");
             dataSrc.getLoginResult(version, name, pwd, new MainCallBack() {
                 @Override
                 public void backRes(String s) {
                     final String wcfResult = s;
                     String[] resArray = wcfResult.split("-");
+                    String retMsg = "";
+                    int retCode = 0;
                     if (resArray[0].equals("SUCCESS")) {
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mView.login(1, name, pwd, "");
-                            }
-                        });
+                        retCode = 1;
                     } else {
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mView.login(0, name, pwd, "登陆失败," + wcfResult);
-                            }
-                        });
+                        retMsg = "登录失败," + wcfResult;
                     }
+                    final int finalRetCode = retCode;
+                    final String finalRetMsg = retMsg;
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (finalRetCode == 0) {
+                                mView.onLoginFailed(finalRetMsg);
+                            }else{
+                                mView.onLoginSuccess(name);
+                            }
+                            mView.cancelLoading();
+                        }
+                    });
                 }
             });
         }
 
-        public void onLoginSuccess( boolean isSaved, boolean isAuto) {
-            dataSrc.saveData(isAuto ,isSaved );
-            mView.startNewActivity();
+        public void saveData(boolean isAuto, boolean isSaved) {
+            dataSrc.saveData(isAuto, isSaved);
         }
 
         public void codeLogin(String code) {

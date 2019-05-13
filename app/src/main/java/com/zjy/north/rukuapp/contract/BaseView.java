@@ -8,5 +8,5 @@ public interface BaseView<T> {
      *
      * @param t
      */
-    void setPrinter(T t);
+    void setPresenter(T t);
 }

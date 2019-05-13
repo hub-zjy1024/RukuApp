@@ -12,8 +12,8 @@ public class FtpManager {
     public static final String TEST_FTP_ULR = "192.168.10.66";
     public static String getTestFTPStr() {
         String host = TEST_FTP_ULR;
-        String user= "zjy";
-        String pwd = "123456";
+        String user= ftpName;
+        String pwd = ftpPassword;
         int port = 21;
         return FTPUtils.getFtpStr(host, user, pwd, port);
     }

@@ -32,9 +32,10 @@ public class FTPUtils {
     public static final String ftpName = "dyjftp";
     public static final String ftpPassword = "dyjftp";
     public static String CaigouFTPAddr = "172.16.6.22";
-    public static final String DB_HOST = "172.16.6.22";
-    public static final String mainAddress = "172.16.6.22";
-    public static final int DEFAULT_PORT = 21;
+    public static String DB_HOST = "172.16.6.22";
+    //    public static final String mainAddress = "172.16.6.22";
+    public static  String mainAddress = "192.168.10.65";
+    public static  int DEFAULT_PORT = 21;
     //    public static final String mainAddress = "210.51.190.36";
     //    public static final int DEFAULT_PORT = 7521;
     public static final String mainName = "NEW_DYJ";
@@ -46,9 +47,14 @@ public class FTPUtils {
     public static final int ADMIN_PORT = DEFAULT_PORT;
     public static final String ADMIN_NAME = mainName;
     public static final String ADMIN_PWD = mainPwd;
+    public static final boolean isWifi = false;
 
     public static FTPUtils getGlobalFTP() {
-        return new FTPUtils(mainAddress, mainName, mainPwd);
+        if (!isWifi) {
+            DB_HOST = "210.51.190.36";
+            DEFAULT_PORT = 7521;
+        }
+        return new FTPUtils(DB_HOST, mainName, mainPwd);
     }
 
     public static FTPUtils getAdminFTP() {
@@ -125,7 +131,7 @@ public class FTPUtils {
      * @param password
      */
     public FTPUtils(String hostname, String username, String password) {
-        this(hostname, DEFAULT_PORT, username, password, false);
+        this(hostname, DEFAULT_PORT, username, password, true);
     } //登录 /** * FTP登陆 * @throws IOException */
 
     /**

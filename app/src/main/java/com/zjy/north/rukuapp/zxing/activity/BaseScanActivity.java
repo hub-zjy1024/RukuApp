@@ -2,6 +2,7 @@ package com.zjy.north.rukuapp.zxing.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,7 +31,8 @@ public abstract class BaseScanActivity extends BaseMActivity implements NoLeakHa
                 break;
         }
     }
-    boolean hasScanBtn = false;
+
+    protected boolean hasScanBtn = false;
     boolean hasInit = false;
     protected BarcodeAPI scanTool = null;
 
@@ -53,19 +55,39 @@ public abstract class BaseScanActivity extends BaseMActivity implements NoLeakHa
     public void getCameraScanResult(String result) {
 
     }
+
+    public boolean isV7000() {
+        String brand = Build.BRAND;
+        if (brand.contains("V7000")) {
+            return true;
+        }
+        return false;
+    }
+    public boolean hasRedLineScan() {
+        return hasScanBtn;
+    }
+    @Override
+    public void init() {
+        String brand = Build.BRAND;
+        scanTool = BarcodeAPI.getInstance();
+        if (brand.contains("V7000")) {
+            hasScanBtn = true;
+            scanTool.open();
+            scanTool.m_handler = scanHandler;
+            hasInit = true;
+        }
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_INFO:
             case KeyEvent.KEYCODE_MUTE:
-                hasScanBtn = true;
-                if (!hasInit) {
-                    scanTool = BarcodeAPI.getInstance();
-                    scanTool.open();
-                    scanTool.m_handler = scanHandler;
-                    hasInit = true;
+                if (hasInit) {
+                    scanTool.scan();
+                }else{
+                    showMsgToast("当前还未初始化扫码器");
                 }
-                scanTool.scan();
                 return true;
 
         }

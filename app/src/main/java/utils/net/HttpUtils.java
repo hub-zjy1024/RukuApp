@@ -20,8 +20,9 @@ public class HttpUtils {
     }
 
     public static class Builder {
-        private int readTimeout = 30 * 1000;
-        private int connTimeout = 30 * 1000;
+        private int timeout = 15;
+        private int readTimeout = timeout* 1000;
+        private int connTimeout = timeout* 1000;
         private String reqUrl;
         private boolean isOutputStreamEnable = false;
         private String reqMethod = "GET";

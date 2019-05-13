@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.zjy.north.rukuapp.MyApp;
+import com.zjy.north.rukuapp.entity.SpSettings;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,15 +22,18 @@ import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 
+import utils.common.UpdateClient;
 import utils.common.UploadUtils;
+import utils.common.log.LogUploader;
 import utils.net.ftp.FTPUtils;
-import utils.net.wsdelegate.WebserviceUtils;
 
 public class LogUploadService extends Service {
     //配置url、log文件名称、log保存地址、ftp用户名密码
-    final String targeUrl = WebserviceUtils.ROOT_URL + "DownLoad/dyj_kf/logcheck.txt";
+    final String targeUrl = UpdateClient.logCheckURL;
+
     public static final String logFileName = "dyj_log_rk.txt";
-    final String savedDir = "/Zjy/log_rk/" + UploadUtils.getyyMM() + "/";
+
+    final String savedDir = LogUploader.remotePath;
     private  final String tagStr = "date";
 
     private int startTime = 9;
@@ -51,7 +55,7 @@ public class LogUploadService extends Service {
     @Override
     public void onCreate() {
         //contextWrapper此时创建
-        sp = getSharedPreferences("uploadlog", MODE_PRIVATE);
+        sp = getSharedPreferences(SpSettings.PREF_LOGUPLOAD, MODE_PRIVATE);
         MyApp.myLogger.writeInfo("UploadService start");
         super.onCreate();
     }
@@ -177,9 +181,18 @@ public class LogUploadService extends Service {
         } else {
             if ("all".equals(deviceID) || localID.equals(deviceID)) {
                 upOK = upload(log, remotePath);
+                if (upOK) {
+                    sp.edit().putString(tagStr, current).apply();
+                    MyApp.myLogger.close();
+                    MyApp.myLogger.init(true);
+                    MyApp.myLogger.writeInfo("speUpload Logger");
+                }
             }
         }
         return upOK;
+    }
+    boolean isSpeDev() {
+        return false;
     }
 
     public String getRemoteName(String dd) {

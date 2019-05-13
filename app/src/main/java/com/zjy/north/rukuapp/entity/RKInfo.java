@@ -6,7 +6,6 @@ public class RKInfo extends BaseFileds {
     //    {
     //        "单据号": 2504900,
     //            "明细ID": 2793458,
-
     //            "剩余数量": 0,
     //            "入库日期": "2019-04-26T23:21:34.117",
     //            "FormID": "Customs-390729",
@@ -108,5 +107,22 @@ public class RKInfo extends BaseFileds {
 
     public void setPidType(String pidType) {
         this.pidType = pidType;
+    }
+
+    @Override
+    public String toString() {
+        return
+                        "单据号='" + pid + '\'' + "\t" +"明细ID='" + detailID + '\'' + "\n" +
+                        "剩余数量='" + leftCount + '\'' + "\n" +
+                        "入库日期='" + rkDate + '\'' + "\n" +
+                        "FormID='" + FormID + '\'' + "\n" +
+                        "开票类型='" + kpType + '\'' + "\n" +
+                        "开票公司='" + kpCompName + '\'' + "\n" +
+                        "单据类型='" + pidType + '\'' + "\n" +
+                        "型号='" + partNo + '\'' + "\n" +
+                        "厂家='" + factory + '\'' + "\n" +
+                        "批号='" + pihao + '\'' + "\t" +"封装='" + fengzhuang + '\'' + "\n" +
+                        "描述='" + description + '\'' + "\n" +
+                        "";
     }
 }

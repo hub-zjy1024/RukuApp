@@ -1,23 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical">
 
     <TextView
         android:id="@+id/item_shangjia_tv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/def_text_size_small"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/item_shangjia_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上架位置："/>
+
+            <EditText
+                android:id="@+id/item_shangjia_ed_place"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:hint="位置"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/item_shangjia_tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_below="@id/item_shangjia_ll"
             android:textColor="@color/alertcolor_bg_whight"
             android:visibility="gone"/>
 
@@ -26,6 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/item_shangjia_ll"
+            android:layout_toRightOf="@id/item_shangjia_ll"
             android:text="上架"/>
     </RelativeLayout>
 

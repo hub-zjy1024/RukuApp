@@ -48,7 +48,7 @@ public class ScanController {
             String code = intent.getStringExtra(DATAKey);
 
             if (code != null && !code.isEmpty()) {
-                Log.e("zjy", "ScanController->onReceive(): SunmiScan==" + code);
+//                Log.e("zjy", "ScanController->onReceive(): SunmiScan==" + code);
                 stop();
                 if (mListener != null) {
                     mListener.onScanResult(code);
@@ -66,7 +66,6 @@ public class ScanController {
         @Override
         public void onServiceDisconnected(ComponentName name) {
             Log.e("zjy", "com.sunmi.scanner.ScanController->onServiceDisconnected(): ==");
-
         }
     };
 

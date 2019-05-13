@@ -24,8 +24,10 @@ import java.util.Set;
 
 public class WebserviceUtils {
     private static final String NAMESPACE = "http://tempuri.org/";
-    public static String ROOT_URL = "http://172.16.6.160:8006/";
     public static final String COMMON_URL = "http://210.51.190.36:7500/";
+
+    //    public static String ROOT_URL = "http://172.16.6.160:8006/";
+    public static String ROOT_URL = COMMON_URL;
     //服务名，带后缀名的
     public static final String MartService = "MartService.svc";
     public static final String MartStock = "MartStock.svc";
@@ -42,7 +44,7 @@ public class WebserviceUtils {
     private static final int VERSION_11 = SoapEnvelope.VER11;
     private static final int VERSION_12 = SoapEnvelope.VER12;
     public static final int DEF_TIMEOUT = 30 * 1000;
-    public static final boolean debug = false;
+    public static final boolean debug = true;
     /**
      设备No
      */
@@ -198,7 +200,9 @@ public class WebserviceUtils {
                     if (len > debugLenLimit) {
                         outStr = outStr.substring(0, debugLenLimit) + "(...)";
                     }
-                    System.out.println(debugMsg);
+                    outStr = debugMsg + ",res=" + outStr;
+                    Log.e("zjy", "WebserviceUtils->getResNew(): Sobjres==" +outStr );
+//                    System.out.println(debugMsg);
                 }
             } else if (sob instanceof SoapPrimitive) {
                 if (debug) {
@@ -207,6 +211,8 @@ public class WebserviceUtils {
                     if (len > debugLenLimit) {
                         outStr = outStr.substring(0, debugLenLimit) + "(...)";
                     }
+                    outStr = debugMsg + ",res=" + outStr;
+                    Log.e("zjy", "WebserviceUtils->getResNew(): SPres==" +outStr );
                     System.out.println(debugMsg);
                 }
             } else {

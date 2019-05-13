@@ -63,6 +63,7 @@ public class UpdateClient {
             WebserviceUtils.ROOT_URL + downPath + "debug-update.txt";
     //更新信息xml文件
     public static String checkUpdateURL = WebserviceUtils.ROOT_URL + downPath + "updateXml.txt";
+    public static String logCheckURL = WebserviceUtils.ROOT_URL + downPath + "logcheck.txt";
     //版本控制配置文件
     private static String checkAvailableVersion = WebserviceUtils.ROOT_URL + downPath + "versionControl.txt";
     //apk文件名

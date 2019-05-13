@@ -1,5 +1,6 @@
 package utils.common;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.telephony.TelephonyManager;
@@ -63,6 +64,19 @@ public class UploadUtils {
         return str;
     }
 
+    public static String getLogUploadInfo2(Date date) {
+        return "";
+    }
+
+    public static String getCurentStr() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
+        return sdf.format(new Date());
+    }
+    public static String getLogUploadInfo(Date date) {
+
+        return "";
+    }
+
     public static String getCurrentDay() {
         Calendar calendar = Calendar.getInstance();
         String str = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
@@ -97,7 +111,7 @@ public class UploadUtils {
         builder.append(path);
         return builder.toString();
     }
-
+    @SuppressLint("MissingPermission")
     public static String getDeviceID(Context mContext) {
         TelephonyManager tm = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
         if (tm == null) {
@@ -105,6 +119,7 @@ public class UploadUtils {
         }
         return tm.getDeviceId();
     }
+    @SuppressLint("MissingPermission")
     public static String getPhoneCode(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         if (tm == null) {
@@ -113,8 +128,10 @@ public class UploadUtils {
         String deviceId = tm.getDeviceId();
         if(deviceId==null){
             deviceId = tm.getSubscriberId();
+            tm.getGroupIdLevel1();
         }
         if (deviceId == null) {
+            deviceId = "known_deviceID";
         }
 
         String phoneModel = Build.MODEL;

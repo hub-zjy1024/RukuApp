@@ -1,14 +1,16 @@
 package com.zjy.north.rukuapp.activity.base;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.android.dev.BarcodeAPI;
 import com.sunmi.scanner.ScanController;
 
 /**
  Created by 张建宇 on 2019/5/5. */
 public class SunmiScanActivity extends SavedLoginInfoWithScanActivity implements ScanController.ScanListener {
-    ScanController sunmiController;
+    private ScanController sunmiController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,9 +20,21 @@ public class SunmiScanActivity extends SavedLoginInfoWithScanActivity implements
     @Override
     public void init() {
         super.init();
+        String brand = Build.BRAND;
+        scanTool = BarcodeAPI.getInstance();
+        if (brand.contains("SUNMI")) {
+            hasScanBtn = true;
+        }
         sunmiController = new ScanController(mContext, this);
     }
 
+    public boolean isSunmiScan() {
+        String brand = Build.BRAND;
+        if (brand.contains("SUNMI")) {
+            return true;
+        }
+        return false;
+    }
     @Override
     public void onScanResult(String code) {
         Log.e("zjy", "com.zjy.north.rukuapp.activity.base.SunmiScanActivity->onScanResult(): ==" + code);

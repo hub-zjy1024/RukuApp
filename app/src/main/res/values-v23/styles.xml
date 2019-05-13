@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="toolbarMenuStyle" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <!-- 是否覆盖锚点，默认为true，即盖住Toolbar -->
+        <item name="overlapAnchor">false</item>
+        <!-- 弹出层背景颜色 -->
+        <item name="android:popupBackground">@color/title_background</item>
+        <!-- 弹出层垂直方向上的偏移，负值会覆盖toolbar -->
+        <item name="android:dropDownVerticalOffset">5dp</item>
+        <!-- 弹出层水平方向上的偏移，即距离屏幕左边的距离，负值会导致右边出现空隙 -->
+        <item name="android:dropDownHorizontalOffset">-2dp</item>
+        <!--文字颜色-->
+        <item name="android:textColor">@color/color_white</item>
+        <!--子标题文字颜色-->
+        <item name="android:subtitleTextColor">@color/color_tb_subtitle</item>
+    </style>
+
+    <style name="mToobar" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:titleTextColor">@color/color_white</item>
+        <item name="android:subtitleTextColor">@color/color_tb_subtitle</item>
+        <item name="android:background">@color/title_background</item>
+    </style>
+</resources>

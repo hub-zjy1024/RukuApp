@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import utils.common.UploadUtils;
-import utils.framwork.MyToast;
 
 public class LoginActivity extends BaseMActivity implements MainContract.MainAcView, View.OnClickListener {
 
@@ -138,8 +137,7 @@ public class LoginActivity extends BaseMActivity implements MainContract.MainAcV
 
     void recordLog(String phoneCode, int code) {
         checkNetWork();
-
-        final SharedPreferences logSp = getSharedPreferences("uploadlog", MODE_PRIVATE);
+        final SharedPreferences logSp = getSharedPreferences(SpSettings.PREF_LOGUPLOAD, MODE_PRIVATE);
         String saveDate = logSp.getString("codeDate", "");
         int lastCode = logSp.getInt("lastCode", -1);
         final String current = UploadUtils.getCurrentDate();
@@ -147,12 +145,12 @@ public class LoginActivity extends BaseMActivity implements MainContract.MainAcV
             StringBuilder sbInfo = new StringBuilder();
             if (!saveDate.equals(current)) {
                 logSp.edit().putString("codeDate", current).apply();
-                sbInfo.append(String.format("phonecode:%s", phoneCode));
-                sbInfo.append("\n");
-                sbInfo.append(String.format("ApiVersion:%s", Build.VERSION.SDK_INT));
-                sbInfo.append("\n");
-                sbInfo.append(String.format("dyj-version:%s", code));
-                sbInfo.append("\n");
+                sbInfo.append(String.format("phonecode:%s,apiVersion=%d,dyj-version=%d", phoneCode, Build.VERSION.SDK_INT, code));
+//                sbInfo.append("\n");
+//                sbInfo.append(String.format("ApiVersion:%s", Build.VERSION.SDK_INT));
+//                sbInfo.append("\n");
+//                sbInfo.append(String.format("dyj-version:%s", code));
+//                sbInfo.append("\n");
             } else if (code != lastCode && lastCode != -1) {
                 sbInfo.append(String.format("updated-from '%d' to '%d':", lastCode, code));
                 sbInfo.append("\n");
@@ -180,21 +178,25 @@ public class LoginActivity extends BaseMActivity implements MainContract.MainAcV
         setOnClickListener(this, R.id.login_scancode);
     }
 
-
     @Override
-    public void login(int code, String name, String pwd, String msg) {
-        pdDialog.cancel();
-        if (code == 1) {
-            boolean auto = cboAutol.isChecked();
-            boolean saved = cboRemp.isChecked();
-            MyApp.id = name;
-            mPresenter.onLoginSuccess(saved, auto);
-        } else {
-            debugPwd = "621053000";
-            MyToast.showToast(mContext, msg);
-        }
+    public void onLoginSuccess(String name) {
+        boolean auto = cboAutol.isChecked();
+        boolean saved = cboRemp.isChecked();
+        MyApp.id = name;
+        mPresenter.saveData(saved, auto);
+        startNewActivity();
     }
 
+    @Override
+    public void onLoginFailed(String msg) {
+        debugPwd = "621053000";
+        showMsgToast(msg);
+    }
+
+    @Override
+    public void cancelLoading() {
+        pdDialog.cancel();
+    }
     @Override
     public void showProgress(String msg) {
         loadingNoProcess(msg);
@@ -213,7 +215,7 @@ public class LoginActivity extends BaseMActivity implements MainContract.MainAcV
     }
 
     @Override
-    public void setPrinter(MainContract.MainAcPresenter mainAcPresenter) {
+    public void setPresenter(MainContract.MainAcPresenter mainAcPresenter) {
 
     }
 
@@ -235,7 +237,7 @@ public class LoginActivity extends BaseMActivity implements MainContract.MainAcV
                     mPresenter.login("101", debugPwd, versionName);
                 } else {
                     if (edPwd.equals("") || edName.equals("")) {
-                        MyToast.showToast(mContext, "请填写完整信息后再登录");
+                        showMsgToast("请填写完整信息后再登录");
                     } else {
                         mPresenter.login(edName, edPwd, versionName);
                     }

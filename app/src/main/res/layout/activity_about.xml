@@ -6,13 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/title"
-        style="@style/zjy_title"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/activity_title_height"
-        android:text="关于"/>
+    <include layout="@layout/title_normal_toobar"/>
+    <!--<TextView-->
+        <!--android:id="@+id/title"-->
+        <!--style="@style/zjy_title"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/activity_title_height"-->
+        <!--android:text="关于"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/appicon"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,6 +78,21 @@
                 android:layout_height="wrap_content"
                 android:text="下载最新版本"/>
         </LinearLayout>
+        <TextView
+            android:id="@+id/activity_about_tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/activity_about_tv_devid"
+            android:textIsSelectable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/activity_about_btn_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上传日志"/>
+
         <ImageView
             android:layout_marginTop="@dimen/view_def_margin"
             android:id="@+id/iv_about_update_qr"

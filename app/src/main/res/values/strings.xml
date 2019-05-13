@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">大赢家入库</string>
+    <string name="app_name">大赢家报关</string>
     <string name="hello_blank_fragment">这是一个空的fragment</string>
     <string name="str_yundan_jaddresss_tag">详细地址（寄）</string>
     <string name="str_yundan_daddresss_tag">详细地址（收）</string>
@@ -39,4 +39,10 @@
     <string name="upload_continue">连拍(连续多张时较快)</string>
     <string name="upload_nomarl">拍照</string>
     <string name="upload_fromphone">从手机选择</string>
+
+    <string name="main_menu_fromphone">menu1</string>
+    <string name="main_menu_menu2">menu2</string>
+    <string name="ruku_menu_piliang">批量</string>
+
+    <string name="baidu_ak">F8mkTvS3fwOHftqGKi7dafUzL9Zo80G0</string>
 </resources>

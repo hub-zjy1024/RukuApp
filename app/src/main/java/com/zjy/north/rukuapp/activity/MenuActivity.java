@@ -9,10 +9,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
+import com.zjy.north.baidulocation.BaiduLocation;
 import com.zjy.north.rukuapp.MyApp;
 import com.zjy.north.rukuapp.R;
 import com.zjy.north.rukuapp.activity.base.SavedLoginInfoActivity;
 import com.zjy.north.rukuapp.adapter.MenuGvAdapter;
+import com.zjy.north.rukuapp.entity.IntentKeys;
 import com.zjy.north.rukuapp.entity.MyMenuItem;
 import com.zjy.north.rukuapp.service.LogUploadService;
 import com.zjy.north.rukuapp.task.CheckUtils;
@@ -34,7 +36,7 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
     private final String tag_ChukuCheck = "出库拍照";
     private final String tag_Admin = "特殊";
     private final String tag_Setting = "设置";
-    private final String tag_shangjia = "货物上架";
+    private final String tag_shangjia = "报关数据上架";
     private final String tag_SHQD = "送货清单";
 
     private final String tag_Zbar = "TestZbar";
@@ -44,7 +46,7 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
     private GridView gv;
     private final String tag_hetong = "hetong";
     private final String tag_about = "关于";
-    private final String tag_quickRuku = "快捷入库";
+    private final String tag_quickRuku = "报关数据入库";
 
 
 
@@ -65,13 +67,20 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
         gv =getViewInContent(R.id.menu_gv);
         gv.setOnItemClickListener(this);
         addItemGV();
+        final Toolbar fTb = tb ;
+        BaiduLocation bloc = new BaiduLocation(this, new BaiduLocation.onReceiveLocationListener() {
+            @Override
+            public void onReceiveLocation(BaiduLocation.Mlocation location) {
+                fTb.setSubtitle(fTb.getSubtitle() + "\t" + location.city + location.district);
+            }
+        });
+        bloc.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
     }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -90,9 +99,11 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
     private void addItemGV() {
         ArrayList<MyMenuItem> data = new ArrayList<>();
 
-        data.add(new MyMenuItem(R.drawable.menu_chuku, tag_quickRuku, "入库"));
-        data.add(new MyMenuItem(R.drawable.menu_chuku, tag_shangjia, "上架"));
+        data.add(new MyMenuItem(R.drawable.menu_ruku, tag_quickRuku, "入库"));
+        data.add(new MyMenuItem(R.drawable.menu_shangjia , tag_shangjia, "上架"));
         data.add(new MyMenuItem(R.drawable.menu_chuku, tag_about, "关于"));
+//        data.add(new MyMenuItem(R.drawable.menu_chuku, tag_Admin, "关于"));
+
         if (CheckUtils.isAdmin()) {
             data.add(new MyMenuItem(R.drawable.menu_chuku, tag_Admin, "101"));
         }
@@ -122,6 +133,14 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
         Intent intent = new Intent();
         switch (value) {
             case tag_Admin:
+//                intent.setClass(mContext, MainActivity.class);
+//                startActivity(intent);
+//                intent.setClass(mContext, TakePicActivity.class);
+//                intent.setClass(mContext, TakePic2Ac.class);
+                intent.setClass(mContext, TakePic2Activity.class);
+
+                intent.putExtra(IntentKeys.key_pid, "123456789");
+                startActivity(intent);
                 break;
             case tag_about:
                 intent.setClass(mContext, AboutActivity.class);
