@@ -103,10 +103,13 @@ public abstract class BaseScanActivity extends BaseMActivity implements NoLeakHa
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if ( resultCode == RESULT_OK) {
-            String result = data.getStringExtra("result");
-            getCameraScanResult(result, requestCode);
-            if (requestCode == REQ_CODE) {
-                getCameraScanResult(result);
+            if (data != null) {
+                //返回data为空时会导致空指针
+                String result = data.getStringExtra("result");
+                getCameraScanResult(result, requestCode);
+                if (requestCode == REQ_CODE) {
+                    getCameraScanResult(result);
+                }
             }
         }
     }
