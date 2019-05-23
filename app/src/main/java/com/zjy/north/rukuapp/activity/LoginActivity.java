@@ -61,7 +61,6 @@ public class LoginActivity extends BaseMActivity implements MainContract.MainAcV
         cboRemp = getViewInContent(R.id.login_rpwd);
         cboAutol = getViewInContent(R.id.login_autol);
         tvVersion = getViewInContent(R.id.main_version);
-        mPresenter = new MainContract.MainAcPresenter(this, this);
         requestPermission(nPermissions);
 
         sp = getSharedPreferences(SpSettings.PREF_USERINFO, 0);

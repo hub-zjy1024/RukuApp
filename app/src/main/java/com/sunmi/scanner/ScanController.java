@@ -111,8 +111,6 @@ public class ScanController {
         }else{
             throw new Exception("还未初始化sunmi扫码功能");
         }
-
-        //        scanInterface.scan();
     }
 
     public void stop() {

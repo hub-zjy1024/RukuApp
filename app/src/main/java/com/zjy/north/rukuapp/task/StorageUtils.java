@@ -60,4 +60,8 @@ public class StorageUtils {
         return storageID;
     }
 
+    public static String getKuquID(String storageInfo) {
+        return StorageUtils.getStorageInfo(storageInfo, "ChildStorageID");
+    }
+
 }

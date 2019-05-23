@@ -76,7 +76,7 @@ public class LogRecoder {
     }
 
 
-    private static String getStacktrace(Throwable e) {
+    private static String getAllStackInfo(Throwable e) {
         String result = "null Exception";
         if (e != null) {
             StringWriter sw = new StringWriter();
@@ -102,6 +102,8 @@ public class LogRecoder {
 
         StackTraceElement[] mainStackTrace = tempT.getStackTrace();
         int stackDeep = mainStackTrace.length;
+
+        int msgLines = 0;
         //倒序导出
         for (int j = stackDeep- 1; j >= 0; j--) {
             if (stackDeep - j <= deep) {
@@ -127,9 +129,13 @@ public class LogRecoder {
                 simpleMsg.append("\tat ");
                 simpleMsg.append(ele.toString());
                 simpleMsg.append("\n");
+                msgLines++;
             } else {
                 break;
             }
+        }
+        if (msgLines == 0) {
+            simpleMsg.append(getAllStackInfo(ex));
         }
         Throwable cause = tempT.getCause();
         while (cause != null) {

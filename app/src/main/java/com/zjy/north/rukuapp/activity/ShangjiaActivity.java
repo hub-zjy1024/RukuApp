@@ -56,6 +56,7 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
     private boolean isShangjia = false;
     private ShangJiaInfo currentItem = null;
     private String storageInfo;
+    private String nowKuqu = "";
     private ProgressDialog pd;
     private Context sjContext = ShangjiaActivity.this;
     RecyclerView rv;
@@ -171,11 +172,11 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
                     currentIp = "4g";
                 }
                 if (storageID.equals("")) {
-                    String info = null;
                     try {
-                        info = StorageUtils.getStorageByIp();
-                        storageID = StorageUtils.getStorageIDFromJson(info);
-                        spKf.edit().putString(SpSettings.storageKey, info).commit();
+                        storageInfo = StorageUtils.getStorageByIp();
+                        nowKuqu = StorageUtils.getKuquID(storageInfo);
+                        storageID = StorageUtils.getStorageIDFromJson(storageInfo);
+                        spKf.edit().putString(SpSettings.storageKey, storageInfo).commit();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -190,6 +191,7 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
     public void onScanResult(String code) {
         super.onScanResult(code);
         dealWithScan(code);
+        MyApp.myLogger.writeInfo("searchcode=" + code);
     }
 
     void dealWithScan(String code) {
@@ -204,7 +206,7 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
                 startShangjia(code);
                 break;
             case R.id.shangjia_activity_ed_pid:
-                Log.e("zjy", "ShangjiaActivity->onScanResult(): ==search");
+                Log.e("zjy", "ShangjiaActivity->dealWithScan(): ==search" );
                 startSearch(code);
                 break;
         }
@@ -247,11 +249,19 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
                 showMsgToast("还未获取到当前IP信息，请稍后");
                 return;
             }
+            if ("".equals(storageInfo)) {
+                showMsgToast("还未获取到当前库房信息，请稍后");
+                return;
+            }
+            if ("".equals(nowKuqu)) {
+                showMsgToast("还未获取到当前库房信息，请稍后");
+                return;
+            }
             final String id = currentItem.getShangjiaID();
-            String newKuqu = getKuquID(storageInfo);
+
             final String description = String.format("android_%s->%s,%s->%s", currentItem.getPlace(), result, currentItem
                             .getKuqu()
-                    , newKuqu);
+                    , nowKuqu);
             loadingNoProcess("正在上架。。。");
 
             Runnable sjRun = new Runnable() {
@@ -397,7 +407,7 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
                         String fengzhuang = tj.getString("封装");
                         String description = tj.getString("描述");
                         String place = tj.getString("位置");
-                        String storageID = ShangjiaActivity.this.storageID;
+                        String storageID = tempId;
                         String flag = tj.getString("SQInvoiceType");
                         String shangjiaID = tj.getString("ID");
                         String company = tj.getString("name");
@@ -429,10 +439,5 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
             }
         };
         TaskManager.getInstance().execute(run);
-    }
-
-
-    public static String getKuquID(String storageInfo) {
-        return StorageUtils.getStorageInfo(storageInfo, "ChildStorageID");
     }
 }

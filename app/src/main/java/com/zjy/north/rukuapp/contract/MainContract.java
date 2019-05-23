@@ -16,7 +16,6 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import utils.common.UpdateClient;
@@ -67,7 +66,6 @@ public class MainContract {
              new Thread() {
                  @Override
                  public void run() {
-                     LinkedHashMap<String, Object> map = new LinkedHashMap<>();
                      try {
                          boolean enable = mClient.checkVersionAvailable();
                          if (!enable) {
@@ -242,6 +240,7 @@ public class MainContract {
                                 mView.onLoginFailed(finalRetMsg);
                             }else{
                                 mView.onLoginSuccess(name);
+                                mHandler.removeCallbacksAndMessages(null);
                             }
                             mView.cancelLoading();
                         }
