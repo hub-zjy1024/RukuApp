@@ -2,6 +2,7 @@ package utils.net.wsdelegate;
 
 import android.util.Log;
 
+import com.zjy.north.rukuapp.BuildConfig;
 import com.zjy.north.rukuapp.MyApp;
 
 import org.ksoap2.SoapEnvelope;
@@ -25,8 +26,7 @@ import java.util.Set;
 public class WebserviceUtils {
     private static final String NAMESPACE = "http://tempuri.org/";
     public static final String COMMON_URL = "http://210.51.190.36:7500/";
-
-    //    public static String ROOT_URL = "http://172.16.6.160:8006/";
+    public static final String LOCAL_URL = "http://172.16.6.160:8006/";
     public static String ROOT_URL = COMMON_URL;
     //服务名，带后缀名的
     public static final String MartService = "MartService.svc";
@@ -44,7 +44,7 @@ public class WebserviceUtils {
     private static final int VERSION_11 = SoapEnvelope.VER11;
     private static final int VERSION_12 = SoapEnvelope.VER12;
     public static final int DEF_TIMEOUT = 30 * 1000;
-    public static final boolean debug = true;
+    public static final boolean debug = BuildConfig.DEBUG;
     /**
      设备No
      */

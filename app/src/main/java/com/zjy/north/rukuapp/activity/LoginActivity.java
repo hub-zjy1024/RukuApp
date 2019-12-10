@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjy.north.rukuapp.MyApp;
@@ -39,10 +40,11 @@ public class LoginActivity extends BaseMActivity implements MainContract.MainAcV
     private CheckBox cboRemp;
     private CheckBox cboAutol;
     private TextView tvVersion;
+    private boolean isLogining=false;
 
-    private String debugPwd = "62105300";
     private SharedPreferences sp;
     private String versionName = "1";
+    private int debugCount = 0;
     public static final int reqPermissionCode = 100;
     public static final String[] nPermissions = new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission
             .WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
@@ -61,6 +63,17 @@ public class LoginActivity extends BaseMActivity implements MainContract.MainAcV
         cboRemp = getViewInContent(R.id.login_rpwd);
         cboAutol = getViewInContent(R.id.login_autol);
         tvVersion = getViewInContent(R.id.main_version);
+        ImageView mainIcon = getViewInContent(R.id.rk_login_debug);
+        mainIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (debugCount >= 5) {
+                    showMsgToast("当前已处于调试模式");
+                    return;
+                }
+                debugCount++;
+            }
+        });
         requestPermission(nPermissions);
 
         sp = getSharedPreferences(SpSettings.PREF_USERINFO, 0);
@@ -182,13 +195,18 @@ public class LoginActivity extends BaseMActivity implements MainContract.MainAcV
         boolean auto = cboAutol.isChecked();
         boolean saved = cboRemp.isChecked();
         MyApp.id = name;
+        if (isLogining) {
+            showMsgToast("正在登录中");
+            return;
+        } else {
+            isLogining = true;
+        }
         mPresenter.saveData(saved, auto);
         startNewActivity();
     }
 
     @Override
     public void onLoginFailed(String msg) {
-        debugPwd = "621053000";
         showMsgToast(msg);
     }
 
@@ -226,14 +244,16 @@ public class LoginActivity extends BaseMActivity implements MainContract.MainAcV
                 String edPwd = this.edPwd.getText().toString().trim();
 
                 String dvId = UploadUtils.getDeviceID(mContext);
-                if ("868930027847564".equals(dvId) || "358403032322590".equals(dvId)
+                if ("868930027847564".equals(dvId) /*|| "358403032322590".equals(dvId)
                         || "864394010742122".equals(dvId)
                         || "A0000043F41515".equals(dvId)
                         || "866462026203849".equals(dvId)
-                        || "869552022575930".equals(dvId)
+                        || "869552022575930".equals(dvId)*/
                         || "868591030284169".equals(dvId)
                         ) {
-                    mPresenter.login("101", debugPwd, versionName);
+                    if (debugCount >= 5) {
+                        mPresenter.debugLogin(versionName);
+                    }
                 } else {
                     if (edPwd.equals("") || edName.equals("")) {
                         showMsgToast("请填写完整信息后再登录");

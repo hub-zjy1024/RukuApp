@@ -6,6 +6,7 @@ import android.widget.EditText;
 
 import com.zjy.north.rukuapp.activity.base.SunmiScanActivity;
 import com.zjy.north.rukuapp.contract.QuickRukuContract;
+import com.zjy.north.rukuapp.entity.ShangJiaInfo;
 import com.zjy.north.rukuapp.entity.WaitRukuInfo;
 
 import java.util.ArrayList;
@@ -56,6 +57,11 @@ public class PiliangRkActivity extends SunmiScanActivity implements QuickRukuCon
 
     @Override
     public void showToast(String msg) {
+
+    }
+
+    @Override
+    public void onShangjiaDataCallback(List<ShangJiaInfo> infos) {
 
     }
 

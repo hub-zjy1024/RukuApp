@@ -6,8 +6,8 @@ android {
         applicationId "com.zjy.north.rukuapp"
         minSdkVersion 22
         targetSdkVersion 28
-        versionCode 2
-        versionName "2.5"
+        versionCode 4
+        versionName "2.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             // 设置支持的 SO 库构架，注意这里要根据你的实际情况来设置

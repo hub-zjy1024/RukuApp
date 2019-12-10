@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import utils.net.HttpUtils;
 import utils.net.wsdelegate.ChuKuServer;
@@ -23,6 +25,27 @@ public class StorageUtils {
         return "";
     }
 
+    public static Map<String, Object> getStorageAndIp() throws IOException {
+        HashMap<String, Object> map = new HashMap<>();
+        String bodyString = "";
+        String info = "";
+        String url = "http://172.16.6.101:802/ErpV5IP.asp";
+        try {
+            String ip = HttpUtils.create(url).getBodyString();
+            map.put("ip", ip);
+            bodyString = ChuKuServer.GetStoreRoomIDByIP(ip);
+            map.put("StorInfo", bodyString);
+        } catch (IOException e) {
+            e.printStackTrace();
+            info = e.getMessage();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+        if (bodyString.equals("")) {
+            throw new IOException("获取库房ID出错：" + info);
+        }
+        return map;
+    }
     public static String getStorageByIp() throws IOException {
         //        GetStoreRoomIDByIP
         String ip = StorageUtils.getCurrentIp();

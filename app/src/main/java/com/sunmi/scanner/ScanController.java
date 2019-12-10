@@ -42,6 +42,9 @@ public class ScanController {
     }
 
     //    IScanInterface iScanInterface;
+    private long time = System.currentTimeMillis();
+    private final int maxDur = 30;
+
     BroadcastReceiver mScanRec = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -51,7 +54,12 @@ public class ScanController {
 //                Log.e("zjy", "ScanController->onReceive(): SunmiScan==" + code);
                 stop();
                 if (mListener != null) {
-                    mListener.onScanResult(code);
+                    if (System.currentTimeMillis() - time > maxDur) {
+                        time = System.currentTimeMillis();
+                        mListener.onScanResult(code);
+                    } else {
+                        Log.e("zjy", "ScanController->onReceive(): too frequently==" + code);
+                    }
                 }
             }
         }

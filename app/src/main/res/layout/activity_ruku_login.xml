@@ -11,6 +11,7 @@
     >
 
     <ImageView
+        android:id="@+id/rk_login_debug"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -34,14 +35,9 @@
         android:layout_marginTop="10dp"
         android:hint="请输入用户名"
         android:maxLines="1"
-        app:met_clearButton="true"
-        app:met_floatingLabel="highlight"
-        app:met_floatingLabelAlwaysShown="true"
         android:inputType="number"
         app:met_floatingLabelText="用户名"
-        app:met_floatingLabelTextColor="@color/main_ed_floatingColor"
-        app:met_floatingLabelTextSize="15sp"
-        app:met_primaryColor="@color/main_ed_primaryColor"/>
+        style="@style/material_ed_normal.login"/>
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/login_pwd"
@@ -53,13 +49,9 @@
         android:hint="请输入密码"
         android:inputType="textPassword"
         android:maxLines="1"
-        app:met_clearButton="true"
-        app:met_floatingLabel="highlight"
-        app:met_floatingLabelAlwaysShown="true"
         app:met_floatingLabelText="密码"
-        app:met_floatingLabelTextColor="@color/main_ed_floatingColor"
-        app:met_floatingLabelTextSize="15sp"
-        app:met_primaryColor="@color/main_ed_primaryColor"/>
+        style="@style/material_ed_normal.login"
+     />
 
     <LinearLayout
         android:layout_width="match_parent"

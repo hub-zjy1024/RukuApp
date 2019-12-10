@@ -34,7 +34,7 @@ public class FTPUtils {
     public static String CaigouFTPAddr = "172.16.6.22";
     public static String DB_HOST = "172.16.6.22";
     //    public static final String mainAddress = "172.16.6.22";
-    public static  String mainAddress = "192.168.10.65";
+    public static  String mainAddress = "192.168.10.66";
     public static  int DEFAULT_PORT = 21;
     //    public static final String mainAddress = "210.51.190.36";
     //    public static final int DEFAULT_PORT = 7521;
@@ -424,5 +424,11 @@ public class FTPUtils {
                 break;
             }
         }
+    }
+
+    public static void uploadToLocalFTP(String filePath, String remotePath) throws IOException {
+        FTPUtils m = FTPUtils.getLocalFTP(FTPUtils.mainAddress);
+        m.login();
+        m.upload(filePath, remotePath);
     }
 }

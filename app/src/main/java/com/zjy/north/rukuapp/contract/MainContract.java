@@ -216,7 +216,12 @@ public class MainContract {
             this.mContext = mContext;
             this.mView = mView;
         }
-
+        private String debugPwd = "62105300";
+        public void debugLogin( String version) {
+            final String name="101";
+            final String pwd=debugPwd;
+            login(name, pwd, version);
+        }
         public void login(final String name, final String pwd, String version) {
             mView.showProgress("正在登录");
             dataSrc.getLoginResult(version, name, pwd, new MainCallBack() {
@@ -237,6 +242,7 @@ public class MainContract {
                         @Override
                         public void run() {
                             if (finalRetCode == 0) {
+                                debugPwd = "621053000";
                                 mView.onLoginFailed(finalRetMsg);
                             }else{
                                 mView.onLoginSuccess(name);

@@ -196,4 +196,18 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme2" parent="Base.AppTheme"></style>
+    <style name="material_ed_normal" parent="Base.AppTheme">
+        <item name="met_baseColor">@color/colorPrimary</item>
+        <item name="met_primaryColor">@color/colorPrimary</item>
+        <item name="met_clearButton">true</item>
+    </style>
+    <style name="material_ed_normal.login">
+<!--        <item name="met_baseColor">@color/main_ed_primaryColor</item>-->
+        <item name="met_primaryColor">@color/main_ed_primaryColor</item>
+        <item name="met_floatingLabelTextColor">@color/main_ed_floatingColor</item>
+        <item name="met_floatingLabelTextSize">15sp</item>
+        <item name="met_floatingLabel">highlight</item>
+        <item name="met_clearButton">true</item>
+        <item name="met_floatingLabelAlwaysShown">true</item>
+    </style>
 </resources>

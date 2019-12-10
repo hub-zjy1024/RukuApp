@@ -28,6 +28,7 @@ public class MyApp extends Application implements Thread.UncaughtExceptionHandle
 
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
+        ex.printStackTrace();
         myLogger.writeError(ex, "===[AppCrash]=====\n");
         android.os.Process.killProcess(android.os.Process.myPid());
     }

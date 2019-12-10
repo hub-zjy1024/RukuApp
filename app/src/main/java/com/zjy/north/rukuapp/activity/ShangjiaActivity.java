@@ -85,7 +85,7 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
                             View itemView = rvMgr.getChildAt(0);
 
                             rv.scrollToPosition(0);
-                            Log.e("zjy", "ShangjiaActivity->handleMessage():rvMgrGetChild==" + itemView + "\tgetChildAt" + childAt2);
+//                            Log.e("zjy", "ShangjiaActivity->handleMessage():rvMgrGetChild==" + itemView + "\tgetChildAt" + childAt2);
                             if (itemView != null) {
                                 EditText viewById = itemView.findViewById(R.id.item_shangjia_ed_place);
                                 viewById.setFocusable(true);
@@ -115,14 +115,13 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
         tb.setTitle("上架");
         tb.setSubtitle("");
         setSupportActionBar(tb);
-
-        rv = (RecyclerView) findViewById(R.id.activity_shangjia_rv);
+        rv =  getViewInContent(R.id.activity_shangjia_rv);
         rvMgr = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rv.setLayoutManager(rvMgr);
         rv.addItemDecoration(new MyDecoration(this));
-        Button btnScan = (Button) findViewById(R.id.shangjia_activity_btn_scancode);
-        edMxID = (EditText) findViewById(R.id.shangjia_activity_ed_pid);
-        Button btnSearch = (Button) findViewById(R.id.shangjia_activity_btn_search);
+        Button btnScan =  getViewInContent(R.id.shangjia_activity_btn_scancode);
+        edMxID =  getViewInContent(R.id.shangjia_activity_ed_pid);
+        Button btnSearch =  getViewInContent(R.id.shangjia_activity_btn_search);
 
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,13 +173,14 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
                 if (storageID.equals("")) {
                     try {
                         storageInfo = StorageUtils.getStorageByIp();
-                        nowKuqu = StorageUtils.getKuquID(storageInfo);
-                        storageID = StorageUtils.getStorageIDFromJson(storageInfo);
                         spKf.edit().putString(SpSettings.storageKey, storageInfo).commit();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
+                nowKuqu = StorageUtils.getKuquID(storageInfo);
+                storageID = StorageUtils.getStorageIDFromJson(storageInfo);
+                Log.e("zjy", "ShangjiaActivity->run(): storageInfo==" + storageInfo+"  currentIp==" + currentIp);
             }
         };
         TaskManager.getInstance().execute(getInfoRun);
@@ -190,19 +190,34 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
     @Override
     public void onScanResult(String code) {
         super.onScanResult(code);
-        dealWithScan(code);
-        MyApp.myLogger.writeInfo("searchcode=" + code);
+        MyApp.myLogger.writeInfo("Sunmi searchcode=" + code);
+        resultBack(code);
     }
 
     void dealWithScan(String code) {
-        EditText currentFocus = (EditText) getCurrentFocus();
-        if (currentFocus == null) {
+        View currentFocus1 = getCurrentFocus();
+        if (currentFocus1 == null) {
             startSearch(code);
             return;
         }
-        switch (currentFocus.getId()) {
+        if (currentFocus1 instanceof EditText) {
+
+        } else {
+            return;
+        }
+        EditText currentFocus = (EditText) currentFocus1;
+                switch (currentFocus.getId()) {
             case R.id.item_shangjia_ed_place:
+                currentFocus.setText(null);
                 currentFocus.setText(code);
+                int counts = rv.getChildCount();
+                Object mTag = currentFocus.getTag();
+                if (mTag != null) {
+                    currentItem = (ShangJiaInfo) mTag;
+                }else{
+                    MyApp.myLogger.writeError("shangjia error itemTag==null");
+                }
+//                Log.e("zjy", "ShangjiaActivity->dealWithScan():childCounts ==" + counts + " view=" + mTag);
                 startShangjia(code);
                 break;
             case R.id.shangjia_activity_ed_pid:
@@ -216,10 +231,11 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
     @Override
 
     public void resultBack(String result) {
-        dealWithScan(result);
+        getCameraScanResult(result);
     }
 
     public void startSearch(String code) {
+        edMxID.setText(null);
         edMxID.setText(code);
         sjInfos.clear();
         SoftKeyboardUtils.closeInputMethod(edMxID, this);
@@ -243,6 +259,9 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
         super.loadingNoProcess(msg);
     }
 
+    public void startShangjia(final String result, EditText ed) {
+
+    }
     public void startShangjia(final String result) {
         if (currentItem != null) {
             if (currentIp == null) {
@@ -254,7 +273,7 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
                 return;
             }
             if ("".equals(nowKuqu)) {
-                showMsgToast("还未获取到当前库房信息，请稍后");
+                showMsgToast("还未获取到当前库区信息，请稍后");
                 return;
             }
             final String id = currentItem.getShangjiaID();
@@ -336,12 +355,12 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
             TextView tv = (TextView) holder.getView(R.id.item_shangjia_tv);
             Button btnSangjia = (Button) holder.getView(R.id.item_shangjia_btn);
             TextView tvStatus = (TextView) holder.getView(R.id.item_shangjia_tv_status);
-            EditText edPlace = holder.getView(R.id.item_shangjia_ed_place);
+            final EditText edPlace = holder.getView(R.id.item_shangjia_ed_place);
             final ShangjiaActivity activity = (ShangjiaActivity) mContext;
             btnSangjia.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    edPlace.requestFocus();
                     activity.isShangjia = true;
                     activity.currentItem = xiaopiaoInfo;
                     if (activity.isV7000()) {
@@ -353,6 +372,10 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
                     }
                 }
             });
+            edPlace.setTag(item);
+            //key可以定义在string.xml中，<item name="tag_shangjia" type="id">123123</item>
+//            edPlace.setTag(R.id.tag_shangjia);
+
             if (!"".equals(xiaopiaoInfo.getStatus())) {
                 tvStatus.setVisibility(View.VISIBLE);
                 tvStatus.setText(xiaopiaoInfo.getStatus());
@@ -360,6 +383,7 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
                 tvStatus.setVisibility(View.GONE);
             }
             tv.setText(xiaopiaoInfo.toString());
+            edPlace.setText(xiaopiaoInfo.getPlace());
 //            if (position == 0) {
 //                edPlace.setFocusable(true);
 //                edPlace.requestFocus();
@@ -375,6 +399,7 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
         Runnable run = new Runnable() {
             @Override
             public void run() {
+                String errMsg = "";
                 try {
                     String balaceInfo = "";
                     String tempId = storageID;
@@ -385,8 +410,8 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
                         balaceInfo = RKServer.GetShangJiaInfo(mxID);
                     }else{
                         balaceInfo = ChuKuServer.GetStorageBlanceInfoByID(Integer.parseInt(mxID), "", tempId);
+//                        balaceInfo = ChuKuServer.GetStorageBlanceInfoByID(Integer.parseInt(mxID), "", "");
                     }
-                    Log.e("zjy", "SangjiaActivity->run(): balanceInfo==" + balaceInfo + "\tstorId=" + tempId);
                     JSONObject jobj = new JSONObject(balaceInfo);
                     JSONArray jarray = jobj.getJSONArray("表");
                     for (int i = 0; i < jarray.length(); i++) {
@@ -423,19 +448,30 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
                         sjInfos.add(info);
                     }
                 } catch (final NumberFormatException e) {
-                    showMsgToast("仅支持纯数字条码");
+                    errMsg = "仅支持纯数字条码";
                     e.printStackTrace();
                 } catch (final IOException e) {
-                    showMsgToast("连接服务器失败：" + e.getMessage());
+                    errMsg = "连接服务器失败：" + e.getMessage();
                     e.printStackTrace();
                 } catch (XmlPullParserException e) {
-                    showMsgToast("服务解析失败，" + e);
+                    errMsg = "服务解析失败：" + e.getMessage();
                     e.printStackTrace();
                 } catch (JSONException e) {
-                    showMsgToast("查询不到数据");
+                    errMsg = "查询不到数据：" + e.getMessage();
                     e.printStackTrace();
                 }
-                mHandler.sendEmptyMessage(GET_DATA);
+                if (!errMsg .equals("")) {
+                    final String finalErrMsg = errMsg;
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            showMsgToast(finalErrMsg);
+                            pdDialog.cancel();
+                        }
+                    });
+                }else {
+                    mHandler.sendEmptyMessage(GET_DATA);
+                }
             }
         };
         TaskManager.getInstance().execute(run);

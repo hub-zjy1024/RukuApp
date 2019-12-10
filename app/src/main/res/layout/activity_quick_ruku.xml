@@ -28,10 +28,8 @@
                 android:layout_height="wrap_content"
                 android:hint="输入明细号"
                 android:inputType="number"
-                app:met_baseColor="@color/colorPrimary"
-                app:met_clearButton="true"
-                app:met_primaryColor="@color/colorPrimary"
-                />
+                style="@style/material_ed_normal"
+               />
 
             <Button
                 android:id="@+id/activity_rk_btn_search"
