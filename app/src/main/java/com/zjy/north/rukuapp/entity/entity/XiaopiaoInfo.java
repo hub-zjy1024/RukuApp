@@ -23,6 +23,9 @@ public class XiaopiaoInfo {
     private String pid;
     private String shangjiaID;
 
+    public XiaopiaoInfo() {
+    }
+
     public XiaopiaoInfo(String partNo, String topID, String time, String deptNo, String counts, String factory, String
             produceFrom, String pihao, String fengzhuang, String description, String place, String note, String flag, String
             codeStr, String storageID, String company) {

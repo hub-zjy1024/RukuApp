@@ -88,6 +88,7 @@
         <activity android:name=".activity.TakePic2Ac"/>
         <activity android:name=".activity.TakePicChildPanku"/>
         <activity android:name=".activity.TakePic2Activity"/>
+        <activity android:name=".activity.QuickRuku2Activity" />
     </application>
 
 </manifest>

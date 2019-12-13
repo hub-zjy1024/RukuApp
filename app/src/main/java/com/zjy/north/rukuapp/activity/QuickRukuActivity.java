@@ -28,6 +28,7 @@ import com.zjy.north.rukuapp.entity.RukuInfoItem;
 import com.zjy.north.rukuapp.entity.ShangJiaInfo;
 import com.zjy.north.rukuapp.entity.SpSettings;
 import com.zjy.north.rukuapp.entity.WaitRukuInfo;
+import com.zjy.north.rukuapp.entity.entity.XiaopiaoInfo;
 import com.zjy.north.rukuapp.task.StorageUtils;
 import com.zjy.north.rukuapp.task.TaskManager;
 
@@ -45,16 +46,16 @@ import utils.framwork.MyToast;
 import utils.net.wsdelegate.ChuKuServer;
 
 public class QuickRukuActivity extends SunmiToobarAc implements QuickRukuContract.IView, View.OnClickListener {
-    private QuickRukuContract.IPresenter mPresenter;
+    protected QuickRukuContract.IPresenter mPresenter;
 
     private List<WaitRukuInfo> mInfos = new ArrayList<>();
 
     private RecyclerView.Adapter mAdapter;
     RecyclerView rvDataView;
-    private EditText edCode;
+    protected EditText edCode;
     private boolean notSearch = false;
-    private boolean notChageFocus = false;
-    private String tempSID = "";
+    protected boolean notChageFocus = false;
+    protected String tempSID = "";
     private ShangJiaInfo currentItem;
     private boolean isShangjia;
     private String currentIp;
@@ -63,7 +64,7 @@ public class QuickRukuActivity extends SunmiToobarAc implements QuickRukuContrac
     private String nowKuqu = "";
     private SharedPreferences spKf;
     private String saveKey_edCode = "edCode";
-    private static final int DELAY_TIME = 200;
+    protected static final int DELAY_TIME = 200;
 
     private Handler mHandler = new Handler();
     @Override
@@ -347,6 +348,13 @@ public class QuickRukuActivity extends SunmiToobarAc implements QuickRukuContrac
         }
     }
 
+    void onShangjia2(XiaopiaoInfo info, int code) {
+        if (code == 0) {
+
+        } else {
+
+        }
+    }
     void onShangjiaOk(String errMsg) {
         String sjCode = edCode.getText().toString();
         cancelLoading();

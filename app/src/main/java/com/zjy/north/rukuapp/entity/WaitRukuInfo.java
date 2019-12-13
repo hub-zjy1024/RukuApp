@@ -19,6 +19,8 @@ public class WaitRukuInfo {
     private String comeFrom;
     private String pihao;
     private int leftCount;
+    private String status;
+    private String place;
 
     public int getLeftCount() {
         return leftCount;
@@ -103,5 +105,21 @@ public class WaitRukuInfo {
 
     public void setPihao(String pihao) {
         this.pihao = pihao;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 }

@@ -10,6 +10,9 @@ public class ShangJiaInfo extends XiaopiaoInfo {
     private String kuqu;
     private String status;
 
+    public ShangJiaInfo() {
+    }
+
     public ShangJiaInfo(String partNo, String topID, String time, String deptNo, String counts, String factory, String
             produceFrom, String pihao, String fengzhuang, String description, String place, String note, String flag, String
             codeStr, String storageID, String company) {
@@ -38,5 +41,10 @@ public class ShangJiaInfo extends XiaopiaoInfo {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

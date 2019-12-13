@@ -37,6 +37,7 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
     private final String tag_Admin = "特殊";
     private final String tag_Setting = "设置";
     private final String tag_shangjia = "报关数据上架";
+    private final String tag_rukuShangjia = "一键上架";
     private final String tag_SHQD = "送货清单";
 
     private final String tag_Zbar = "TestZbar";
@@ -101,6 +102,7 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
 
         data.add(new MyMenuItem(R.drawable.menu_ruku, tag_quickRuku, "入库"));
         data.add(new MyMenuItem(R.drawable.menu_shangjia , tag_shangjia, "上架"));
+        data.add(new MyMenuItem(R.drawable.menu_shangjia , tag_rukuShangjia, "上架"));
         data.add(new MyMenuItem(R.drawable.menu_chuku, tag_about, "关于"));
 //        data.add(new MyMenuItem(R.drawable.menu_chuku, tag_Admin, "关于"));
 
@@ -152,6 +154,10 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
                 break;
             case tag_shangjia:
                 intent.setClass(mContext, ShangjiaActivity.class);
+                startActivity(intent);
+                break;
+            case tag_rukuShangjia:
+                intent.setClass(mContext, QuickRuku2Activity.class);
                 startActivity(intent);
                 break;
 
