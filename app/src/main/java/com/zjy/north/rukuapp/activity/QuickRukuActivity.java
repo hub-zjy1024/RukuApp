@@ -148,6 +148,11 @@ public class QuickRukuActivity extends SunmiToobarAc implements QuickRukuContrac
     }
 
     @Override
+    public void onRukuSuccess2(String inputCode, String place) {
+
+    }
+
+    @Override
     public void onRukuSuccess(final String mxId) {
 //        enterShangjiaPage(mxId);
 //        String specId = mxId + "|123";
@@ -337,7 +342,8 @@ public class QuickRukuActivity extends SunmiToobarAc implements QuickRukuContrac
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            onShangjiaOk(finalErrMsg);
+//                            onShangjiaOk(finalErrMsg);
+                            onShangjiaOk2(finalErrMsg, result);
                         }
                     });
                 }
@@ -355,12 +361,40 @@ public class QuickRukuActivity extends SunmiToobarAc implements QuickRukuContrac
 
         }
     }
+
+    void onShangjiaOk2(String errMsg, String place) {
+        String sjCode = edCode.getText().toString();
+        cancelLoading();
+        if (!"".equals(errMsg)) {
+            showMsgDialog(errMsg);
+        } else {
+            if (currentItem != null) {
+                currentItem.setPlace(place);
+            }
+            mAdapter.notifyDataSetChanged();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //mAdapter中也有控件获取焦点
+                    //不是立马生效，获取焦点需要时间
+                    // 需要延时
+                    edCode.requestFocus();
+                }
+            }, DELAY_TIME);
+            String searchId = sjCode;
+            showToast("上架成功");
+            startSearch(searchId);
+        }
+    }
     void onShangjiaOk(String errMsg) {
         String sjCode = edCode.getText().toString();
         cancelLoading();
         if (!"".equals(errMsg)) {
             showMsgDialog(errMsg);
         } else {
+            if (currentItem != null) {
+                currentItem.setPlace("");
+            }
             mAdapter.notifyDataSetChanged();
             mHandler.postDelayed(new Runnable() {
                 @Override

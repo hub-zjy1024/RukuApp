@@ -71,7 +71,7 @@ public class LogUploadService extends Service {
         new Thread() {
             @Override
             public void run() {
-                if (!checkDate()) {
+                if (checkDate()) {
                     return;
                 }
                 lastUpTime = sp.getLong("lasttime", 0);

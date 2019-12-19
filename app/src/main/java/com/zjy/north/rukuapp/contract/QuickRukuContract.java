@@ -36,6 +36,8 @@ public class QuickRukuContract {
 
         void onRukuSuccess(String mxId);
 
+        void onRukuSuccess2(String inputCode, String place);
+
         void showToast(String msg);
 
         void onShangjiaDataCallback(List<ShangJiaInfo> infos);
@@ -47,6 +49,7 @@ public class QuickRukuContract {
         void getData2(String code, String storId);
 
         void ruku(WaitRukuInfo info, String Place, String uid, String RKCount);
+        void ruku2(WaitRukuInfo info, String Place, String uid, String RKCount);
 
         void ruku(List<WaitRukuInfo> infos, String uid);
     }
@@ -124,6 +127,30 @@ public class QuickRukuContract {
                 @Override
                 public void callbackShangjia(String mxId) {
                     mView.onRukuSuccess(mxId);
+                    mView.cancelLoading();
+                }
+
+                @Override
+                public void callback(List<WaitRukuInfo> data) {
+
+                }
+
+                @Override
+                public void onError(String msg) {
+                    mView.showAlert(msg);
+                    mView.cancelLoading();
+                }
+            });
+        }
+        @Override
+        public void ruku2(WaitRukuInfo info, final String Place, String uid, String RKCount) {
+            final String detailId = info.getId();
+
+            mView.loading(detailId + "正在入库");
+            dataSrc.ruku(info, Place, uid, RKCount, new DataSrc.MultiListener() {
+                @Override
+                public void callbackShangjia(String mxId) {
+                    mView.onRukuSuccess2(mxId, Place);
                     mView.cancelLoading();
                 }
 

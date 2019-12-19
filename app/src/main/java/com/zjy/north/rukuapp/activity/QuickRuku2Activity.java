@@ -82,7 +82,7 @@ public class QuickRuku2Activity extends QuickRukuActivity {
                 String place = code;
                 String leftCount = "" + currentItem.getLeftCount();
                 newPlace = code;
-                mPresenter.ruku(currentItem, place, loginID, leftCount);
+                mPresenter.ruku2(currentItem, place, loginID, leftCount);
                 break;
             case R.id.activity_rk_ed_code:
                 super.dealWith(code);
@@ -119,6 +119,21 @@ public class QuickRuku2Activity extends QuickRukuActivity {
     }
 
     @Override
+    public void onRukuSuccess2(String inputCode, String place) {
+        String specId = edCode.getText().toString();
+        edCode.requestFocus();
+        RecyclerView.Adapter mada = rvDataView.getAdapter();
+        if (mada != null) {
+            String newPlace = place;
+            currentItem.setStatus("位置变化：" +currentItem.getPlace()  + "->" + newPlace);
+            currentItem.setPlace(newPlace);
+            mada.notifyDataSetChanged();
+        }
+        showToast(currentItem.getId() + "入库完成,并已上架");
+        tempSID = specId;
+    }
+
+    @Override
     public void onRukuSuccess(String mxId) {
 //        super.onRukuSuccess(mxId);
         String specId = edCode.getText().toString();
@@ -126,6 +141,7 @@ public class QuickRuku2Activity extends QuickRukuActivity {
         RecyclerView.Adapter mada = rvDataView.getAdapter();
         if (mada != null) {
             currentItem.setStatus("位置变化：" +currentItem.getPlace()  + "->" + newPlace);
+            currentItem.setPlace(newPlace);
             mada.notifyDataSetChanged();
         }
 

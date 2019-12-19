@@ -47,7 +47,8 @@ public class WaitRukuInfo {
                         "制单日期='" + makeDate + '\'' + "\n" +
                         "型号='" + partno + '\'' + "\n" +
                         "数量='" + counts + '\'' + "\t" + "厂家='" + factory + '\'' + "\n" +
-                        "产地='" + comeFrom + '\'' + "\t" + "批号='" + pihao + '\'' +
+                        "产地='" + comeFrom + '\'' + "\t" + "批号='" + pihao + '\'' + "\n" +
+                        "位置='" + place+"'"+
                         "";
     }
 

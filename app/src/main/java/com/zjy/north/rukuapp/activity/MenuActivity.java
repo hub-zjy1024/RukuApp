@@ -116,7 +116,11 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
     @Override
     protected void onResume() {
         super.onResume();
-        startService(new Intent(this, LogUploadService.class));
+        try {
+            startService(new Intent(this, LogUploadService.class));
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

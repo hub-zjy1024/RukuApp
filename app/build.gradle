@@ -1,3 +1,6 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
 apply plugin: 'com.android.application'
 
 android {
@@ -6,8 +9,8 @@ android {
         applicationId "com.zjy.north.rukuapp"
         minSdkVersion 22
         targetSdkVersion 28
-        versionCode 6
-        versionName "2.9"
+        versionCode 7
+        versionName "3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             // 设置支持的 SO 库构架，注意这里要根据你的实际情况来设置
@@ -20,6 +23,28 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            android.applicationVariants.all { variant ->
+                File relaseDir = new File("D:\\dyj\\app")
+                def tag = "rk"
+                File f = new File(relaseDir, "dyj_" + tag +"\\apk")
+                if (!f.exists()) {
+                    f.mkdirs()
+                }
+                def pkApp = variant.getPackageApplicationProvider().get()
+                //    var pkApp = variant.getPackageApplication()//3.3以前gradle, 2019被移除
+                if (variant.buildType.name != "debug") {//防止AS无法安装debug包(apk)
+                    pkApp.outputDirectory = f
+                }
+                def defaultConfig = android["defaultConfig"]
+                def tarApiVersion = defaultConfig["targetSdkVersion"]
+                pkApp.outputScope.apkDatas.forEach { apkData ->
+                    //这个修改输出APK的文件名
+                    apkData.outputFileName = "dyj_" +tag+"_"+
+                            variant.versionName + "_" +
+                            variant.versionCode + "_t" + tarApiVersion["mApiLevel"] +
+                            ".apk"
+                }
+            }
         }
     }
 
@@ -30,6 +55,32 @@ android {
         }
     }
 }
+
+boolean checkGradlePluginVersion(float checkVersion) {
+    println("---------------I'm now compiling with gradle " + project.gradle.gradleVersion)
+    String dname = "com.android.tools.build:gradle"
+    String fileContent = rootProject.buildscript.getSourceFile().text
+    int index = fileContent.indexOf(dname)
+    int index2 = fileContent.indexOf("'", index + 1)
+
+    String version = fileContent.substring(index + dname.length() + 1, index2)
+    println("---------------dependency version " + version)
+    Pattern mPattern = Pattern.compile("\\d\\.\\d")
+    Matcher matcher = mPattern.matcher(version)
+    while (matcher.find()) {
+    }
+    matcher.findAll().each { it -> println(it) }
+    def mVersion = matcher.findAll()[0]
+    if (mVersion != null) {
+        float mainVersion = Float.parseFloat(mVersion)
+        if (mainVersion > checkVersion) {
+            println("---------------gradle plugin higher than ${checkVersion}")
+            return true
+        }
+    }
+    return false
+}
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

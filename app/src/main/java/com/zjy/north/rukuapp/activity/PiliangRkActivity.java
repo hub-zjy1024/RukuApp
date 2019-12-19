@@ -56,6 +56,11 @@ public class PiliangRkActivity extends SunmiScanActivity implements QuickRukuCon
     }
 
     @Override
+    public void onRukuSuccess2(String inputCode, String place) {
+
+    }
+
+    @Override
     public void showToast(String msg) {
 
     }
