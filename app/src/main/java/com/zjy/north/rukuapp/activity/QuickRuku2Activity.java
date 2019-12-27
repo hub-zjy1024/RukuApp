@@ -157,7 +157,6 @@ public class QuickRuku2Activity extends QuickRukuActivity {
 
     @Override
     public void updateData(final List<WaitRukuInfo> data) {
-        Log.e("zjy", "QuickRuku2Activity->updateData(): newDate==");
         Ruku2Adapter adapter = new Ruku2Adapter(data,
                 R.layout.item_shangjia, mContext);
         rvDataView.setAdapter(adapter);

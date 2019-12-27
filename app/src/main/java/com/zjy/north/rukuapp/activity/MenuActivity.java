@@ -16,12 +16,12 @@ import com.zjy.north.rukuapp.activity.base.SavedLoginInfoActivity;
 import com.zjy.north.rukuapp.adapter.MenuGvAdapter;
 import com.zjy.north.rukuapp.entity.IntentKeys;
 import com.zjy.north.rukuapp.entity.MyMenuItem;
-import com.zjy.north.rukuapp.service.LogUploadService;
 import com.zjy.north.rukuapp.task.CheckUtils;
 
 import java.util.ArrayList;
 
 import utils.btprint.SPrinter;
+import utils.common.log.LogUploader;
 import utils.framwork.DialogUtils;
 
 public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickListener {
@@ -116,11 +116,13 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
     @Override
     protected void onResume() {
         super.onResume();
-        try {
-            startService(new Intent(this, LogUploadService.class));
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
+//        try {
+//            startService(new Intent(this, LogUploadService.class));
+//        } catch (Throwable e) {
+//            e.printStackTrace();
+//        }
+        LogUploader uploader = new LogUploader(this);
+        uploader.ScheduelUpload();
     }
 
     @Override

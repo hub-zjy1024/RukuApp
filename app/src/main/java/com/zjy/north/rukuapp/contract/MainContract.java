@@ -63,7 +63,7 @@ public class MainContract {
 
          public void getLoginResult(final String version, final String name, final String pwd, final MainCallBack callBack) {
 
-             new Thread() {
+             Runnable mRun = new Runnable() {
                  @Override
                  public void run() {
                      try {
@@ -89,12 +89,13 @@ public class MainContract {
                          e.printStackTrace();
                      }
                  }
-             }.start();
+             };
+             TaskManager.getInstance().execute(mRun);
          }
 
 
          private void getUserInfoDetail(final String uid) {
-             new Thread() {
+             Runnable mRun = new Runnable() {
                  @Override
                  public void run() {
                      boolean success = false;
@@ -116,7 +117,8 @@ public class MainContract {
                          }
                      }
                  }
-             }.start();
+             };
+             TaskManager.getInstance().execute(mRun);
          }
 
          private Map<String, Object> getUserInfo(String uid) throws IOException,

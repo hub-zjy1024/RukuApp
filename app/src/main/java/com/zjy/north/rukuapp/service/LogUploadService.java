@@ -31,7 +31,7 @@ public class LogUploadService extends Service {
     //配置url、log文件名称、log保存地址、ftp用户名密码
     final String targeUrl = UpdateClient.logCheckURL;
 
-    public static final String logFileName = "dyj_log_rk.txt";
+    public static final String logFileName = LogUploader.logFileName;
 
     final String savedDir = LogUploader.remotePath;
     private  final String tagStr = "date";

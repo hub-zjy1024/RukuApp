@@ -54,7 +54,7 @@ public class FTPUtils {
             DB_HOST = "210.51.190.36";
             DEFAULT_PORT = 7521;
         }
-        return new FTPUtils(DB_HOST, mainName, mainPwd);
+        return new FTPUtils(DB_HOST, DEFAULT_PORT, mainName, mainPwd);
     }
 
     public static FTPUtils getAdminFTP() {

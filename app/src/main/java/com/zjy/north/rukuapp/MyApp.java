@@ -2,12 +2,11 @@ package com.zjy.north.rukuapp;
 
 import android.app.Application;
 
-import com.zjy.north.rukuapp.service.LogUploadService;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import utils.common.LogRecoder;
+import utils.common.log.LogUploader;
 
 /**
  Created by js on 2016/12/27. */
@@ -20,7 +19,7 @@ public class MyApp extends Application implements Thread.UncaughtExceptionHandle
     @Override
     public void onCreate() {
         super.onCreate();
-        final String logFileName = LogUploadService.logFileName;;
+        final String logFileName = LogUploader.logFileName;
         myLogger = new LogRecoder(logFileName);
         Thread.setDefaultUncaughtExceptionHandler(this);
     }
