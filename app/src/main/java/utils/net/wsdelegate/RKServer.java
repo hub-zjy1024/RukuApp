@@ -40,4 +40,14 @@ public class RKServer{
 		return WebserviceUtils.getWcfResult(properties, "SetApplyCustomRuKu", serverName);
 	}
 
+	public static String ChaiDan(int instorageMainID, int instorageDetailID, String json,
+								 String loginID) throws IOException, XmlPullParserException {
+		LinkedHashMap<String, Object> properties = new LinkedHashMap<>();
+		properties.put("instorageMainID", instorageMainID);
+		properties.put("instorageDetailID", instorageDetailID);
+		//		BatchNo  Number
+		properties.put("json", json);
+		properties.put("loginID", loginID);
+		return WebserviceUtils.getWcfResult(properties, "ChaiDan", serverName);
+	}
 }

@@ -12,4 +12,8 @@
     <dimen name="btn_padding">8dp</dimen>
     <dimen name="view_def_margin">8dp</dimen>
 
+    <dimen name="item_view_padding_horizontal">10dp</dimen>
+    <dimen name="item_view_padding_vetical">8dp</dimen>
+    <dimen name="dimen_menu_item_bg_padding">8dp</dimen>
+
 </resources>

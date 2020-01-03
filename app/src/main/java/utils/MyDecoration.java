@@ -32,6 +32,13 @@ public class MyDecoration extends RecyclerView.ItemDecoration {
         setOrientation(orientation);
     }
 
+    public MyDecoration(Drawable mDivider, int mOrientation) {
+        this.mDivider = mDivider;
+        this.mOrientation = mOrientation;
+        setOrientation(mOrientation);
+
+    }
+
     public MyDecoration(Context context) {
         this(context, VERTICAL);
     }

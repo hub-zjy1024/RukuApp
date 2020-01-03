@@ -44,5 +44,8 @@
     <string name="main_menu_menu2">menu2</string>
     <string name="ruku_menu_piliang">批量</string>
 
+    <string name="menu_quick_rk_pihao">批号修改</string>
+
     <string name="baidu_ak">F8mkTvS3fwOHftqGKi7dafUzL9Zo80G0</string>
+
 </resources>

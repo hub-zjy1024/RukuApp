@@ -16,6 +16,7 @@ import android.support.v4.content.FileProvider;
 import android.util.Log;
 
 import com.zjy.north.rukuapp.MyApp;
+import com.zjy.north.rukuapp.task.TaskManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +56,15 @@ public class UpdateClient {
     ProgressDialog downPd = null;
     //修改downPath、downUrl和saveName
 
+    public interface IDownloader {
+        void preDownload();
+
+        void onUpdate(int percent);
+
+        void onFinished(File apkFile);
+
+        void onError(String msg);
+    }
 
     //配置目录
     private static String downPath = "DownLoad/dyj_ruku/";
@@ -244,6 +254,73 @@ public class UpdateClient {
         downloadApk(downUrl);
     }
 
+    public void downloadLatesetVersion(final IDownloader mDownloader) {
+        mDownloader.preDownload();
+        Runnable mRun = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final Context context = mContext;
+                    URL url = new URL(downUrl);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setConnectTimeout(10 * 1000);
+                    conn.setReadTimeout(30000);
+                    if (conn.getResponseCode() == 200) {
+                        InputStream is = conn.getInputStream();
+                        int size = conn.getContentLength();
+                        File targetDir = MyFileUtils.getFileParent();
+                        final File file1 = new File(targetDir, saveName);
+                        if (!file1.getParentFile().exists()) {
+                            file1.getParentFile().mkdirs();
+                        }
+                        FileOutputStream fos = new FileOutputStream(file1);
+                        int len = 0;
+                        int hasRead = 0;
+                        int percent = 0;
+                        byte[] buf = new byte[1024];
+                        while ((len = is.read(buf)) != -1) {
+                            hasRead = hasRead + len;
+                            percent = (hasRead * 100) / size;
+                            final int tempPercent = percent;
+                            if (hasRead < 0) {
+                                Log.e("zjy",
+                                        UpdateClient.class.getName() + ".java->updateAPK(): hasRead==" + hasRead);
+                            }
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    int percent = tempPercent;
+                                    if (percent < 0) {
+                                        return;
+                                    }
+                                    mDownloader.onUpdate(percent);
+                                    if (percent == 100) {
+                                        mDownloader.onFinished(file1);
+                                    }
+                                }
+                            });
+
+                            fos.write(buf, 0, len);
+                        }
+                        fos.flush();
+                        is.close();
+                        fos.close();
+                        MyApp.myLogger.writeInfo("update downLoadLatest");
+                    }
+                } catch (Exception e) {
+                    Log.e("zjy", "UpdateClient->downloadLatesetVersion->run(): ==", e);
+                    final String msg = "下载更新失败," + e.getMessage();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mDownloader.onError(msg);
+                        }
+                    });
+                }
+            }
+        };
+        TaskManager.getInstance().execute(mRun);
+    }
     private void downloadApk(String downUrl) throws
             IOException {
         URL url = new URL(downUrl);
@@ -308,7 +385,7 @@ public class UpdateClient {
         }
     }
 
-    private void installApk(File file) {
+    public void installApk(File file) {
         if (file.exists()) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -373,7 +450,7 @@ public class UpdateClient {
                 sb.append(s);
             }
             String versions = sb.toString();
-            Log.e("zjy", "UpdateClient->checkVersionAvailable(): OnlineVersoins==" + versions);
+            Log.d("zjy", "UpdateClient->checkVersionAvailable(): OnlineVersoins==" + versions);
             JSONArray jsonArray = new JSONArray(versions);
             for (int i = 0; i < jsonArray.length(); i++) {
                 String tempV = jsonArray.getString(i);

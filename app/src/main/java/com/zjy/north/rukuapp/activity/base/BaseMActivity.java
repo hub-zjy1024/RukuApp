@@ -20,12 +20,12 @@ public abstract class BaseMActivity extends AppCompatActivity {
     protected ProgressDialog pdDialog;
 
     private boolean isPaused = true;
-
+    private DialogUtils mdialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-
+        mdialog= new DialogUtils(mContext);
     }
 
     protected void loadingNoProcess(String msg) {
@@ -107,5 +107,17 @@ public abstract class BaseMActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    public int showProgressWithID(String msg) {
+        if (mdialog == null) {
+            return -1;
+        }
+        return mdialog.showProgressWithID(msg);
+    }
+    public void cancelDialogById(int pdId) {
+        if (mdialog == null) {
+            return ;
+        }
+        mdialog.cancelDialogById(pdId);
     }
 }

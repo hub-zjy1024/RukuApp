@@ -49,6 +49,10 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="@string/baidu_ak" >
         </meta-data>
+        <meta-data
+            android:name="pkName"
+            android:value="${pkName}" >
+        </meta-data>
 
         <activity android:name=".activity.MainActivity"
                   android:theme="@style/AppSplash">
@@ -74,7 +78,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.zjy.north.rukuapp.provider"
+            android:authorities="${pkName}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -89,6 +93,7 @@
         <activity android:name=".activity.TakePicChildPanku"/>
         <activity android:name=".activity.TakePic2Activity"/>
         <activity android:name=".activity.QuickRuku2Activity" />
+        <activity android:name=".activity.KucunEditActivity" />
     </application>
 
 </manifest>

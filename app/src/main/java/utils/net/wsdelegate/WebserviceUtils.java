@@ -27,6 +27,8 @@ public class WebserviceUtils {
     private static final String NAMESPACE = "http://tempuri.org/";
     public static final String COMMON_URL = "http://210.51.190.36:7500/";
     public static final String LOCAL_URL = "http://172.16.6.160:8006/";
+    public static final String LOCAL_URL_test = "http://192.168.10.117:8081/";
+
     public static String ROOT_URL = COMMON_URL;
     //服务名，带后缀名的
     public static final String MartService = "MartService.svc";
@@ -122,6 +124,25 @@ public class WebserviceUtils {
         return getWcfResult(request, VERSION_11, serviceName);
     }
 
+    public static String getWcfResultLocal(LinkedHashMap<String, Object> properties, String method,
+                                           String serviceName) throws IOException,
+            XmlPullParserException {
+        SoapObject request = getRequest(properties, method);
+        int timeout = DEF_TIMEOUT;
+        int envolopeVesion = VERSION_11;
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(envolopeVesion);
+        //.net开发的ws服务必须设置为true
+        envelope.dotNet = true;
+        //设置请求参数
+        envelope.setOutputSoapObject(request);
+        //创建HttpTransportSE对象
+        String testUrl = LOCAL_URL_test + serviceName;
+        HttpTransportSE ht = new HttpTransportSE(testUrl, timeout);
+        //有些不需要传入soapAction，根据wsdl文档
+//        return getResNew2(ht,envelope, serviceName);
+        return getResNew(ht, envolopeVesion, envelope, serviceName, request);
+    }
+
     private static String getCommWsResult(String namespace, String method, String soapAction, String transUrl,
                                           LinkedHashMap<String, Object> properties, int envolopeVersion, int
                                                   timeout) throws IOException, XmlPullParserException {
@@ -176,6 +197,14 @@ public class WebserviceUtils {
         //有些不需要传入soapAction，根据wsdl文档
         return getResNew(ht, envolopeVesion, envelope, serviceName, request);
     }
+
+    private static String getResNew2(HttpTransportSE ht,
+                                     SoapSerializationEnvelope envelope, String serviceName
+    ) throws IOException {
+        int envolopeVesion = envelope.version;
+        SoapObject request = (SoapObject) envelope.bodyOut;
+        return getResNew(ht, envolopeVesion, envelope, serviceName, request);
+    }
     public static String getResNew(HttpTransportSE ht, int envolopeVesion, SoapSerializationEnvelope envelope, String serviceName, SoapObject request)
             throws IOException{
         String ret = "";
@@ -212,8 +241,7 @@ public class WebserviceUtils {
                         outStr = outStr.substring(0, debugLenLimit) + "(...)";
                     }
                     outStr = debugMsg + ",res=" + outStr;
-                    Log.e("zjy", "WebserviceUtils->getResNew(): SPres==" +outStr );
-                    System.out.println(debugMsg);
+                    Log.d("zjy", "WebserviceUtils->getResNew(): SPres==" +outStr );
                 }
             } else {
                 MyApp.myLogger.writeBug("Soap response is Unknow," + debugMsg + "," + sob.toString());

@@ -2,6 +2,8 @@ package com.zjy.north.rukuapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,6 +15,7 @@ import com.zjy.north.baidulocation.BaiduLocation;
 import com.zjy.north.rukuapp.MyApp;
 import com.zjy.north.rukuapp.R;
 import com.zjy.north.rukuapp.activity.base.SavedLoginInfoActivity;
+import com.zjy.north.rukuapp.adapter.MenuActivityRvAdapter;
 import com.zjy.north.rukuapp.adapter.MenuGvAdapter;
 import com.zjy.north.rukuapp.entity.IntentKeys;
 import com.zjy.north.rukuapp.entity.MyMenuItem;
@@ -20,6 +23,8 @@ import com.zjy.north.rukuapp.task.CheckUtils;
 
 import java.util.ArrayList;
 
+import utils.adapter.recyclerview.BaseItemClickListener;
+import utils.adapter.recyclerview.BaseRvViewholder;
 import utils.btprint.SPrinter;
 import utils.common.log.LogUploader;
 import utils.framwork.DialogUtils;
@@ -47,6 +52,8 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
     private GridView gv;
     private final String tag_hetong = "hetong";
     private final String tag_about = "关于";
+    private final String tag_kucun_mgr = "库存管理";
+
     private final String tag_quickRuku = "报关数据入库";
 
 
@@ -65,8 +72,8 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
         tb.setSubtitle("登陆人:" + MyApp.id);
         setSupportActionBar(tb);
 
-        gv =getViewInContent(R.id.menu_gv);
-        gv.setOnItemClickListener(this);
+//        gv =getViewInContent(R.id.menu_gv);
+//        gv.setOnItemClickListener(this);
         addItemGV();
         final Toolbar fTb = tb ;
         BaiduLocation bloc = new BaiduLocation(this, new BaiduLocation.onReceiveLocationListener() {
@@ -103,6 +110,7 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
         data.add(new MyMenuItem(R.drawable.menu_ruku, tag_quickRuku, "入库"));
         data.add(new MyMenuItem(R.drawable.menu_shangjia , tag_shangjia, "上架"));
         data.add(new MyMenuItem(R.drawable.menu_shangjia , tag_rukuShangjia, "上架"));
+        data.add(new MyMenuItem(R.drawable.menu_kucun_edit, tag_kucun_mgr, "关于"));
         data.add(new MyMenuItem(R.drawable.menu_chuku, tag_about, "关于"));
 //        data.add(new MyMenuItem(R.drawable.menu_chuku, tag_Admin, "关于"));
 
@@ -110,7 +118,17 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
             data.add(new MyMenuItem(R.drawable.menu_chuku, tag_Admin, "101"));
         }
         MenuGvAdapter adapter = new MenuGvAdapter(this, data, R.layout.item_menu_gv);
-        gv.setAdapter(adapter);
+        RecyclerView mView = getViewInContent(R.id.activity_menu_dataview);
+        MenuActivityRvAdapter adap = new MenuActivityRvAdapter(data, R.layout.item_menu_gv, mContext, new BaseItemClickListener<MyMenuItem>() {
+            @Override
+            public void onItemClick(BaseRvViewholder holder, MyMenuItem item) {
+                MenuActivity.this.onItemClick(item);
+            }
+        });
+        GridLayoutManager gridLayoutMgr = new GridLayoutManager(mContext, 3);
+        mView.setLayoutManager(gridLayoutMgr );
+        mView.setAdapter(adap);
+//        gv.setAdapter(adapter);
     }
 
     @Override
@@ -137,14 +155,17 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         MyMenuItem data = (MyMenuItem) parent.getItemAtPosition(position);
+        onItemClick(data);
+    }
+    void onItemClick(MyMenuItem data ){
         String value = data.content;
         Intent intent = new Intent();
         switch (value) {
             case tag_Admin:
-//                intent.setClass(mContext, MainActivity.class);
-//                startActivity(intent);
-//                intent.setClass(mContext, TakePicActivity.class);
-//                intent.setClass(mContext, TakePic2Ac.class);
+                //                intent.setClass(mContext, MainActivity.class);
+                //                startActivity(intent);
+                //                intent.setClass(mContext, TakePicActivity.class);
+                //                intent.setClass(mContext, TakePic2Ac.class);
                 intent.setClass(mContext, TakePic2Activity.class);
 
                 intent.putExtra(IntentKeys.key_pid, "123456789");
@@ -164,6 +185,10 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
                 break;
             case tag_rukuShangjia:
                 intent.setClass(mContext, QuickRuku2Activity.class);
+                startActivity(intent);
+                break;
+            case tag_kucun_mgr:
+                intent.setClass(mContext, KucunEditActivity.class);
                 startActivity(intent);
                 break;
 

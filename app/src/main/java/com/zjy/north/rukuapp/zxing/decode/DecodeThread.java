@@ -93,7 +93,7 @@ public class DecodeThread extends Thread {
 	@Override
 	public void run() {
 		Looper.prepare();
-		Log.e("zjy", "DecodeThread->run(): newDecodeHandler==");
+		Log.d("zjy",getClass()+"->run(): newDecodeHandler==");
 		handler = new DecodeHandler(activity, hints);
 		handlerInitLatch.countDown();
 		Looper.loop();

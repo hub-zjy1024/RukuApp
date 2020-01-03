@@ -118,32 +118,55 @@ public class AboutActivity extends BaseMActivity implements NoLeakHandler.NoLeak
         btnDonloadNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //必须设定进图条样式
-                downPd.show();
-                new Thread() {
+                final UpdateClient mClien = new UpdateClient(mContext);
+                mClien.downloadLatesetVersion(new UpdateClient.IDownloader() {
                     @Override
-                    public void run() {
-                        super.run();
-                        String errMsg = "";
-                        try {
-                            updateAPK(mContext, mHandler, updateUrl);
-                        } catch (final IOException e) {
-                            errMsg = "下载更新失败," + e.getMessage();
-                            e.printStackTrace();
-                        }
-                        final String finalErrMsg = errMsg;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!"".equals(finalErrMsg)) {
-                                    showMsgDialog(finalErrMsg);
-                                }
-
-                                downPd.cancel();
-                            }
-                        });
+                    public void preDownload() {
+                        downPd.show();
                     }
-                }.start();
+
+                    @Override
+                    public void onUpdate(int percent) {
+                        downPd.setProgress(percent);
+                    }
+
+                    @Override
+                    public void onFinished(File apkFile) {
+                        downPd.cancel();
+                        mClien.installApk(apkFile);
+                    }
+
+                    @Override
+                    public void onError(String msg) {
+                        showMsgDialog("更新出现异常," + msg);
+                    }
+                });
+                //必须设定进图条样式
+//                downPd.show();
+//                new Thread() {
+//                    @Override
+//                    public void run() {
+//                        super.run();
+//                        String errMsg = "";
+//                        try {
+//                            updateAPK(mContext, mHandler, updateUrl);
+//                        } catch (final IOException e) {
+//                            errMsg = "下载更新失败," + e.getMessage();
+//                            e.printStackTrace();
+//                        }
+//                        final String finalErrMsg = errMsg;
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                if (!"".equals(finalErrMsg)) {
+//                                    showMsgDialog(finalErrMsg);
+//                                }
+//
+//                                downPd.cancel();
+//                            }
+//                        });
+//                    }
+//                }.start();
             }
         });
         PackageManager pm = getPackageManager();

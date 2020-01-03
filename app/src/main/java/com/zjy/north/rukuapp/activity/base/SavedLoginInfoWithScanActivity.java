@@ -30,7 +30,7 @@ public class SavedLoginInfoWithScanActivity extends BaseScanActivity implements 
             MyApp.id = loginID;
             MyApp.ftpUrl = savedInstanceState.getString("ftpUrl");
         }
-        Log.e("zjy",getClass().getName()+"->getSavedId->onCreate(): nowID==" + loginID);
+        Log.d("zjy", getClass().getName() + "->SaveWithScan->getSavedId->onCreate(): nowID==" + loginID);
     }
 
     @Override

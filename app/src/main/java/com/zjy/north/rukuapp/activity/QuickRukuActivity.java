@@ -59,7 +59,7 @@ public class QuickRukuActivity extends SunmiToobarAc implements QuickRukuContrac
     private ShangJiaInfo currentItem;
     private boolean isShangjia;
     private String currentIp;
-    private String storageID="";
+    protected String storageID = "";
     private String storageInfo;
     private String nowKuqu = "";
     private SharedPreferences spKf;
@@ -428,11 +428,6 @@ public class QuickRukuActivity extends SunmiToobarAc implements QuickRukuContrac
         setContentView(R.layout.activity_quick_ruku);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e("zjy", "com.zjy.north.rukuapp.activity.QuickRukuActivity->onPause(): ==");
-    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -492,7 +487,6 @@ public class QuickRukuActivity extends SunmiToobarAc implements QuickRukuContrac
 //                    break;
 //            }
         }
-        Log.e("zjy", "com.zjy.north.rukuapp.activity.QuickRukuActivity->onResume(): ==");
     }
 
 

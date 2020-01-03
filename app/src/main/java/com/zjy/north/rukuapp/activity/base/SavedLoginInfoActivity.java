@@ -27,7 +27,7 @@ public class SavedLoginInfoActivity  extends BaseMActivity {
             MyApp.id = loginID;
             MyApp.ftpUrl = savedInstanceState.getString("ftpUrl");
         }
-        Log.e("zjy", getClass().getName() + "->supper->onCreate(): nowID==" + loginID);
+        Log.d("zjy", getClass().getName() + "->normal->onCreate(): nowID==" + loginID);
     }
 
     @Override

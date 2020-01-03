@@ -180,7 +180,8 @@ public class ShangjiaActivity extends SunmiScanActivity implements NoLeakHandler
                 }
                 nowKuqu = StorageUtils.getKuquID(storageInfo);
                 storageID = StorageUtils.getStorageIDFromJson(storageInfo);
-                Log.e("zjy", "ShangjiaActivity->run(): storageInfo==" + storageInfo+"  currentIp==" + currentIp);
+                Log.d("zjy", getClass().getName() + "->getInfoRun->run(): storageInfo==" + storageInfo + " " +
+                        " currentIp==" + currentIp);
             }
         };
         TaskManager.getInstance().execute(getInfoRun);

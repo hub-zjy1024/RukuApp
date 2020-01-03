@@ -79,7 +79,7 @@ public class LoginActivity extends BaseMActivity implements MainContract.MainAcV
         sp = getSharedPreferences(SpSettings.PREF_USERINFO, 0);
         final String phoneCode = UploadUtils.getPhoneCode(mContext);
         //        pd = new ProgressDialog(mContext);
-        Log.e("zjy", "MainActivity.java->onCreate(): phoneInfo==" + phoneCode);
+        Log.d("zjy", "MainActivity.java->onCreate(): phoneInfo==" + phoneCode);
         //检查更新
         int code = 0;
         try {

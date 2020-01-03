@@ -62,7 +62,7 @@ public class LogUploader {
         Runnable mRun = new Runnable() {
             @Override
             public void run() {
-                Log.e("zjy", "LogUploader->ScheduelUpload run(): start UploadLog==");
+                Log.d("zjy", "LogUploader->ScheduelUpload run(): start UploadLog==");
                 if (checkDate()) {
                     return;
                 }
@@ -72,7 +72,7 @@ public class LogUploader {
                 if (timeDur < 120) {
                     return;
                 }
-                Log.e("zjy", "LogUploader->ScheduelUpload run(): time ok==");
+                Log.d("zjy", "LogUploader->ScheduelUpload run(): time ok==");
                 final File root = Environment.getExternalStorageDirectory();
                 final File log = new File(root, logFileName);
                 final String date = sp.getString(tagStr, "");
@@ -147,7 +147,7 @@ public class LogUploader {
                 e.printStackTrace();
             }
             if (upOK) {
-                Log.e("zjy", "LogUploadService->uploadLogFile(): UploadLog Finish==");
+                Log.d("zjy", "LogUploadService->uploadLogFile(): UploadLog Finish==");
                 sp.edit().putString(tagStr, current).apply();
                 MyApp.myLogger.close();
                 MyApp.myLogger.init(false);

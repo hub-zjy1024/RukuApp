@@ -134,8 +134,8 @@ public class BaiduLocation {
             mlocation.longitude = longitude;
             mlocation.coorType = coorType;
             mListener.onReceiveLocation(mlocation);
-            Log.e("zjy", "BaiduLocation->onReceiveLocation(): ==province" + "" + province + "\t" + city + "\t" + district);
-            Log.e("zjy", "BaiduLocation->onReceiveLocation(): ==street" + "" + street + "\t" + streetNumber);
+            Log.d("zjy", "BaiduLocation->onReceiveLocation(): ==province" + "" + province + "\t" + city + "\t" + district);
+            Log.d("zjy", "BaiduLocation->onReceiveLocation(): ==street" + "" + street + "\t" + streetNumber);
         }
     }
 }
