@@ -32,7 +32,12 @@ public abstract class BaseMActivity extends AppCompatActivity {
         pdDialog.setTitle("加载中。。。");
         pdDialog.setMessage(msg);
         String s;
-        pdDialog.show();
+        try {
+            pdDialog.show();
+        } catch (Exception e) {
+
+        }
+
 //        if (!isPaused) {
 //            pdDialog.show();
 //        }

@@ -99,10 +99,14 @@ public class DialogUtils {
         ProgressDialog proDialog = new ProgressDialog(mContext);
         proDialog.setTitle("请稍后");
         proDialog.setMessage(msg);
-        proDialog.show();
+
         Window window = proDialog.getWindow();
         if (window != null) {
-            proDialog.show();
+            try{
+                proDialog.show();
+            }catch (Exception e){
+
+            }
         } else {
             MyApp.myLogger.writeError("showProgressWithID  no Window==");
             Log.e("zjy", getClass() + "->showProgressWithID(): no Window==" + msg);
@@ -115,7 +119,11 @@ public class DialogUtils {
     public void cancelDialogById(int pdId) {
         ProgressDialog proDialog = (ProgressDialog) mPds.get(pdId);
         if (proDialog != null) {
-            proDialog.cancel();
+            try{
+                proDialog.cancel();
+            }catch (Exception e){
+
+            }
             mPds.remove(pdId);
         }
     }

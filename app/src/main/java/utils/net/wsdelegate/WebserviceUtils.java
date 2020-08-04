@@ -25,7 +25,8 @@ import java.util.Set;
 
 public class WebserviceUtils {
     private static final String NAMESPACE = "http://tempuri.org/";
-    public static final String COMMON_URL = "http://210.51.190.36:7500/";
+    public static final String COMMON_URL = "http://vpn3.t996.top:7500/";
+//    public static final String COMMON_URL = "http://210.51.190.36:7500/";
     public static final String LOCAL_URL = "http://172.16.6.160:8006/";
     public static final String LOCAL_URL_test = "http://192.168.10.117:8081/";
 
