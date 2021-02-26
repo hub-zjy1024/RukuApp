@@ -26,6 +26,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.TransformationMethod;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -1502,15 +1503,28 @@ public class CustMaterialEd extends MaterialEditText{
     private boolean insideClearButton(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        int startX = getScrollX() + (iconLeftBitmaps == null ? 0 : (iconOuterWidth + iconPadding));
-        int endX = getScrollX() + (iconRightBitmaps == null ? getWidth() : getWidth() - iconOuterWidth - iconPadding);
+        //触摸位置和scrollX无关，触摸位置是相对于控件宽度width，width-iconWidth即为button左侧
+        int scrollX = getScrollX();
+        int width = getWidth();
+        Log.e("zjy", "CustMaterialEd->insideClearButton(): now==" + x+"\t"+y);
+//        int startX = scrollX + (iconLeftBitmaps == null ? 0 : (iconOuterWidth + iconPadding));
+//        int endX = scrollX + (iconRightBitmaps == null ? getWidth() : getWidth() - iconOuterWidth - iconPadding);
+//        if (scrollX > width) {
+//            startX = scrollX - width;
+//
+//        }
+        int startX = width -(iconLeftBitmaps == null ? 0 : (iconOuterWidth + iconPadding));
+        int endX = width;
+
+        Log.e("zjy", "CustMaterialEd->insideClearButton(): ==" + startX+"\t"+endX);
         int buttonLeft;
         if (isRTL()) {
             buttonLeft = startX;
         } else {
             buttonLeft = endX - iconOuterWidth;
         }
-        int buttonTop = getScrollY() + getHeight() - getPaddingBottom() + bottomSpacing - iconOuterHeight;
+//        int buttonTop = getScrollY() + getHeight() - getPaddingBottom() + bottomSpacing - iconOuterHeight;
+        int buttonTop = getHeight() - (iconOuterHeight + iconPadding);
         return (x >= buttonLeft && x < buttonLeft + iconOuterWidth && y >= buttonTop && y < buttonTop + iconOuterHeight);
     }
 

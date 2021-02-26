@@ -42,7 +42,7 @@ public class MenuActivity extends SavedLoginInfoActivity implements OnItemClickL
     private final String tag_Admin = "特殊";
     private final String tag_Setting = "设置";
     private final String tag_shangjia = "报关数据上架";
-    private final String tag_rukuShangjia = "一键上架";
+    public final String tag_rukuShangjia = "一键上架";
     private final String tag_SHQD = "送货清单";
 
     private final String tag_Zbar = "TestZbar";

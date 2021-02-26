@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.zjy.north.rukuapp.BuildConfig;
 import com.zjy.north.rukuapp.MyApp;
 import com.zjy.north.rukuapp.R;
 import com.zjy.north.rukuapp.contract.KucunEditContract;
@@ -34,6 +35,8 @@ import utils.framwork.MyToast;
 
 /**
  * Created by 张建宇 on 2019/12/13.
+ * {@link MenuActivity#tag_rukuShangjia}
+ *
  */
 public class QuickRuku2Activity extends QuickRukuActivity implements QuickRK2Contract.IView2 {
 
@@ -46,6 +49,10 @@ public class QuickRuku2Activity extends QuickRukuActivity implements QuickRK2Con
         super.onCreate(savedInstanceState);
         mInfos = new ArrayList<>();
         presenter = new QuickRK2Contract.Present(this);
+        if (BuildConfig.DEBUG) {
+            EditText edText = getViewInContent(R.id.activity_rk_ed_code);
+            edText.setText("A640320|2959883|3252270##TJA1050T/CM,118|5000|TH|NXP||640320|MTM0OS4w");
+        }
     }
 
     private   KucunEditContract.Presenter presenter;

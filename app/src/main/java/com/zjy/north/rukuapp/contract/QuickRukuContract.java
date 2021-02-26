@@ -381,6 +381,13 @@ public class QuickRukuContract {
 
         }
 
+        /**
+         * 获取上架数据列表
+         * @param mxID
+         * @param storID
+         * @return
+         * @throws IOException
+         */
         public List<ShangJiaInfo> getShangjiaList(String mxID, String storID) throws IOException {
             List<ShangJiaInfo> sjInfos = new ArrayList();
             String errMsg = "";
@@ -452,6 +459,16 @@ public class QuickRukuContract {
             }
         }
 
+        /**
+         * 1.判断查询结果是否正确<br/>
+         * 2.判断单据状态是否正确 <br/>
+         *  &nbsp;&nbsp;&nbsp;&nbsp;等待入库、部分入库-》一键入库上架流程<br/>
+         * &nbsp;&nbsp;&nbsp;&nbsp;已入库-》进入上架流程<br/>
+         *  &nbsp;&nbsp;&nbsp;&nbsp;其他状态-》错误提示<br/>
+         * @param code
+         * @param mCallBack
+         * @param storId
+         */
         public void getData2(final String code, final MultiListener2 mCallBack, final String storId) {
             Runnable mRun = new Runnable() {
                 @Override
@@ -566,6 +583,8 @@ public class QuickRukuContract {
                                 } else {
                                     throw new IOException("查询不到" + code + "的入库数据");
                                 }
+                            }else{
+                                throw new IOException("状态异常,必须为等待入库、部分入库、已入库，的入库数据，当前为："+message);
                             }
                         } else {
                             throw new IOException("接口返回异常，" + message);

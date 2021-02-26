@@ -208,7 +208,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             // RuntimeException.
             if (handler == null) {
 //                handler = new CaptureActivityHandler(this, cameraManager, DecodeThread.ALL_MODE);
-                handler = new CaptureActivityHandler(this, cameraManager, DecodeThread.BARCODE_MODE);
+//                handler = new CaptureActivityHandler(this, cameraManager, DecodeThread.BARCODE_MODE);
+                handler = new CaptureActivityHandler(this, cameraManager, DecodeThread.ALL_MODE);
             }
 
             initCrop();

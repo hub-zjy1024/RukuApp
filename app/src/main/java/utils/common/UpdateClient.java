@@ -27,6 +27,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -45,6 +46,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import utils.framwork.DialogUtils;
 import utils.framwork.MyToast;
+import utils.net.HttpUtils;
 import utils.net.wsdelegate.WebserviceUtils;
 
 /**
@@ -407,7 +409,12 @@ public class UpdateClient {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = factory.newDocumentBuilder();
             InputSource inputSource = new InputSource(url);
-            Document xmlDoc = docBuilder.parse(inputSource);
+//            Document xmlDoc = docBuilder.parse(inputSource);
+            String xml = HttpUtils.create(url).getBodyString();
+            ByteArrayInputStream bai = new ByteArrayInputStream(xml.getBytes());
+            Document xmlDoc = docBuilder.parse(bai);
+
+            Log.e("zjy", "UpdateClient->getUpdateXml(): ==" +xml);
             NodeList newVersion = xmlDoc.getElementsByTagName("latest-version");
             Node item = newVersion.item(0);
             NodeList childNodes = item.getChildNodes();

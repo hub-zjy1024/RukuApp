@@ -16,7 +16,8 @@ import java.net.URLEncoder;
  Created by 张建宇 on 2019/5/10. */
 public class TomcatTransferUploader extends PicUploader {
 //        String url = "http://192.168.10.65:8080";
-    String url = "http://oa.wl.net.cn:6060/";
+//    String url = "http://oa.wl.net.cn:6060/";
+    String url = "http://oa.t996.top:6060/";
     String path = "/PicTransferServer/TransferServlet";
 
     private Context mContext;
